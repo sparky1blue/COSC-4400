@@ -71,6 +71,21 @@ public class Scanner{
 
     }
     
+    //make var to store the next character in 
+    /*private int prev; // holds previous value across calls
+
+public int reader() throws IOException {
+    int temp = prev;
+    prev = in.read(); // 'in' is your actual reader object, e.g. BufferedReader
+    return temp;
+}
+} */
+    
+    
+    //make ishex()
+   
+    
+
     public String getCoin (java.io.Reader reader) throws java.io.IOException
     {
         State state = State.START;
@@ -99,19 +114,40 @@ public class Scanner{
                 c = reader.read ();
                 type = "int";
                 break;
-            
-                //needs overhaul
+            case ZERO:
+                lexeme = lexeme + (char) c;      
+                c = reader.read ();
+                if (c == 'x' || c == 'X') {
+                    lexeme = lexeme + (char) c;
+                    c = reader.read ();
+                    if (!isHex(c)) {
+                        return "Invalid character in hex number.";
+                    }
+                    state = State.HEXBUILDING;   // carried into next loop iteration's table lookup
+                } else if (c == '8' || c == '9') {
+                    return "Invalid character in octal number.";
+                }
+                break;
+            case OCTALBUILDING:
+                    if (c == '8' || c == '9') {
+                        return "Invalid character in octal number."; //fix
+                    }
+                    lexeme = lexeme + (char) c;
+                    c = reader.read ();
+                    break;
             case ACCEPT:
-                //reswords func 
-                //ops func
-                //punc func
+                    if (c != -1) {
+                        reader.unread (c);
+                    }
+                    //make type function 
+                    return type (lexeme) + " " + lexeme;
 
-            
+                case ERROR:
+                    return "Illegal token.";
 
-            case ERROR:return "ERROR_COIN";
-
-            default:System.err.println ("ERROR: Reached wrong state " + state);
-                return "ERROR_Coin";
+                default:
+                    System.err.println ("ERROR: Reached wrong state " + state);
+                    return "Illegal token.";
             }
         }
         return "EOF";
