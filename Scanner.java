@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 
+
 public class Scanner{
 
     public final boolean DEBUG = false;
@@ -145,7 +146,8 @@ public class Scanner{
                 type = "GREATERTHAN";
                 break;
 
-            case ACCEPT:return type +"(" + lexeme + ")";
+            case ACCEPT:
+                return type +"(" + lexeme + ")";
 
             case ERROR:return "ERROR_COIN";
             default:System.err.println ("ERROR: Reached wrong state " + state);
