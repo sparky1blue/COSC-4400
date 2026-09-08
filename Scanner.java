@@ -8,18 +8,35 @@ public class Scanner{
     public final boolean DEBUG = false;
 
     public enum CharType
-    {LETTER, DIGIT, WHITESPACE, PLUS, MINUS, TIMES, DIVIDE, LPAREN, RPAREN, LBRACE, RBRACE, SEMICOLON, COMMA, LESSTHAN, GREATERTHAN, ASSIGN, OTHER};
+    {LETTER, DIGIT, WHITESPACE, PLUS, MINUS, STAR, FORWARDSLASH, LPAREN, RPAREN, LBRACE, RBRACE, SEMICOLON, COMMA, LESSTHAN, GREATERTHAN, ASSIGN, OTHER, BANG, QOUTE, ZERO};
 
     public CharType characterClass[] = new CharType[256];
     
-    //ADD ASIGN
+    
     public enum State
-    {START, IDBUILDING, ACCEPT, ERROR, NUMBUILDING};
+    {START, IDBUILDING, ACCEPT, ERROR, NUMBUILDING, STRINGBUILDING, OPBUILDER, PUNC, EQUALS, AND, OR, ZERO};
+
+    // == && || 
+
+    //LETTER, DIGIT, WHITESPACE, PLUS, MINUS, STAR, FORWARDSLASH, LPAREN, RPAREN, LBRACE, RBRACE, SEMICOLON, COMMA, LESSTHAN, GREATERTHAN, ASSIGN, OTHER, QOUTE
+
+    /*
+    START
+    IDBULIDING
+    ACCEPT
+    ERROR
+    NUMBUILDING
+    STRINGBUILDER
+    OPBUILDER 
+    EQUALS
+    AND
+    OR*/
+
 
     //can start with an int lit
     public State next_state[][] =
-    { {State.IDBUILDING, State.NUMBUILDING, State.ERROR},
-      {State.IDBUILDING, State.IDBUILDING, State.ACCEPT},
+    { {State.IDBUILDING, State.NUMBUILDING, State.START, State.OPBUILDER, State.OPBUILDER, State.OPBUILDER, State.OPBUILDER, State.OPBUILDER, State.OPBUILDER, State.OPBUILDER, State.OPBUILDER, State.PUNC, State.PUNC, State.OPBUILDER, State.OPBUILDER, State.EQUALS, State.ACCEPT, State.STRINGBUILDING },
+      {State.IDBUILDING, State.IDBUILDING, State.ACCEPT, State.ACCEPT, State.ACCEPT, State.ACCEPT, State.ACCEPT, State.ACCEPT, State.ACCEPT, State.ACCEPT, State.ACCEPT, State.ACCEPT, State.ACCEPT, State.ACCEPT, State.ACCEPT,State.ACCEPT, State.ACCEPT, State.ACCEPT, State.ACCEPT, State.ACCEPT,},
       {State.ACCEPT, State.ACCEPT, State.ACCEPT},
       {State.ERROR, State.ERROR, State.ERROR},
       {State.IDBUILDING, State.NUMBUILDING, State.ACCEPT}
@@ -40,8 +57,8 @@ public class Scanner{
 
         characterClass['+'] = CharType.PLUS;
         characterClass['-'] = CharType.MINUS;
-        characterClass['*'] = CharType.TIMES;
-        characterClass['/'] = CharType.DIVIDE;
+        characterClass['*'] = CharType.STAR;
+        characterClass['/'] = CharType.FORWARDSLASH;
         characterClass['('] = CharType.LPAREN;
         characterClass[')'] = CharType.RPAREN;
         characterClass['{'] = CharType.LBRACE;
@@ -50,6 +67,8 @@ public class Scanner{
         characterClass[','] = CharType.COMMA;
         characterClass['<'] = CharType.LESSTHAN;
         characterClass['>'] = CharType.GREATERTHAN;
+        characterClass['!'] = CharType.BANG;
+
     }
     
     public String getCoin (java.io.Reader reader) throws java.io.IOException
@@ -80,76 +99,17 @@ public class Scanner{
                 c = reader.read ();
                 type = "int";
                 break;
-            case ASSIGN:
-                lexeme = lexeme + (char) c;
-                c = reader.read ();
-                type = "ASSIGN";
-                break;
-            case PLUS:
-                lexeme = lexeme + (char) c;
-                c = reader.read ();
-                type = "PLUS";
-                break;
-            case MINUS:
-                lexeme = lexeme + (char) c;
-                c = reader.read ();
-                type = "MINUS";
-                break;
-            case STAR:
-                lexeme = lexeme + (char) c;
-                c = reader.read ();
-                type = "TIMES";
-                break;
-            case FORWARDSLASH:
-                lexeme = lexeme + (char) c;
-                c = reader.read ();
-                type = "DIVIDE";
-                break;
-            case LPAREN:
-                lexeme = lexeme + (char) c;
-                c = reader.read ();
-                type = "LPAREN";
-                break;
-            case RPAREN:
-                lexeme = lexeme + (char) c;
-                c = reader.read ();
-                type = "RPAREN";
-                break;
-            case LBRACE:
-                lexeme = lexeme + (char) c;
-                c = reader.read ();
-                type = "LBRACE";
-                break;
-            case RBRACE:
-                lexeme = lexeme + (char) c;
-                c = reader.read ();
-                type = "RBRACE";
-                break;
-            case SEMICOLON:
-                lexeme = lexeme + (char) c;
-                c = reader.read ();
-                type = "SEMICOLON";
-                break;
-            case COMMA:
-                lexeme = lexeme + (char) c;
-                c = reader.read ();
-                type = "COMMA";
-                break;
-            case LESSTHAN:
-                lexeme = lexeme + (char) c;
-                c = reader.read ();
-                type = "LESSTHAN";
-                break;
-            case GREATERTHAN:
-                lexeme = lexeme + (char) c;
-                c = reader.read ();
-                type = "GREATERTHAN";
-                break;
-
+            
+                //needs overhaul
             case ACCEPT:
-                return type +"(" + lexeme + ")";
+                //reswords func 
+                //ops func
+                //punc func
+
+            
 
             case ERROR:return "ERROR_COIN";
+
             default:System.err.println ("ERROR: Reached wrong state " + state);
                 return "ERROR_Coin";
             }
