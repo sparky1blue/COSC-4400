@@ -7,10 +7,11 @@ public class Scanner{
     public final boolean DEBUG = false;
 
     public enum CharType
-    {LETTER, DIGIT, OTHER};
+    {LETTER, DIGIT, WHITESPACE, PLUS, MINUS, TIMES, DIVIDE, LPAREN, RPAREN, LBRACE, RBRACE, SEMICOLON, COMMA, LESSTHAN, GREATERTHAN, ASSIGN, OTHER};
 
     public CharType characterClass[] = new CharType[256];
     
+    //ADD ASIGN
     public enum State
     {START, IDBUILDING, ACCEPT, ERROR, NUMBUILDING};
 
@@ -34,6 +35,20 @@ public class Scanner{
             characterClass[i] = CharType.LETTER;
         for (int i = '0'; i <= '9'; i++)
             characterClass[i] = CharType.DIGIT;
+        
+
+        characterClass['+'] = CharType.PLUS;
+        characterClass['-'] = CharType.MINUS;
+        characterClass['*'] = CharType.TIMES;
+        characterClass['/'] = CharType.DIVIDE;
+        characterClass['('] = CharType.LPAREN;
+        characterClass[')'] = CharType.RPAREN;
+        characterClass['{'] = CharType.LBRACE;
+        characterClass['}'] = CharType.RBRACE;
+        characterClass[';'] = CharType.SEMICOLON;
+        characterClass[','] = CharType.COMMA;
+        characterClass['<'] = CharType.LESSTHAN;
+        characterClass['>'] = CharType.GREATERTHAN;
     }
     
     public String getCoin (java.io.Reader reader) throws java.io.IOException
@@ -48,8 +63,10 @@ public class Scanner{
         {
             CharType charClass = characterClass[c];
             if (DEBUG) System.out.print ("state = " + state + ", class = " + charClass);
+            
             state = next_state[state.ordinal ()][charClass.ordinal ()];
             if (DEBUG) System.out.println (" ==> state = " + state);
+            
             switch (state)
             {
             case IDBUILDING:
@@ -62,6 +79,72 @@ public class Scanner{
                 c = reader.read ();
                 type = "int";
                 break;
+            case ASSIGN:
+                lexeme = lexeme + (char) c;
+                c = reader.read ();
+                type = "ASSIGN";
+                break;
+            case PLUS:
+                lexeme = lexeme + (char) c;
+                c = reader.read ();
+                type = "PLUS";
+                break;
+            case MINUS:
+                lexeme = lexeme + (char) c;
+                c = reader.read ();
+                type = "MINUS";
+                break;
+            case STAR:
+                lexeme = lexeme + (char) c;
+                c = reader.read ();
+                type = "TIMES";
+                break;
+            case FORWARDSLASH:
+                lexeme = lexeme + (char) c;
+                c = reader.read ();
+                type = "DIVIDE";
+                break;
+            case LPAREN:
+                lexeme = lexeme + (char) c;
+                c = reader.read ();
+                type = "LPAREN";
+                break;
+            case RPAREN:
+                lexeme = lexeme + (char) c;
+                c = reader.read ();
+                type = "RPAREN";
+                break;
+            case LBRACE:
+                lexeme = lexeme + (char) c;
+                c = reader.read ();
+                type = "LBRACE";
+                break;
+            case RBRACE:
+                lexeme = lexeme + (char) c;
+                c = reader.read ();
+                type = "RBRACE";
+                break;
+            case SEMICOLON:
+                lexeme = lexeme + (char) c;
+                c = reader.read ();
+                type = "SEMICOLON";
+                break;
+            case COMMA:
+                lexeme = lexeme + (char) c;
+                c = reader.read ();
+                type = "COMMA";
+                break;
+            case LESSTHAN:
+                lexeme = lexeme + (char) c;
+                c = reader.read ();
+                type = "LESSTHAN";
+                break;
+            case GREATERTHAN:
+                lexeme = lexeme + (char) c;
+                c = reader.read ();
+                type = "GREATERTHAN";
+                break;
+
             case ACCEPT:return type +"(" + lexeme + ")";
 
             case ERROR:return "ERROR_COIN";
