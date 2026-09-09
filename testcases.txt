@@ -1,0 +1,91 @@
+ID_CHECKS
+x
+hello
+hello123
+xValue
+cab
+deadCode
+ABC
+abc
+x1
+variable123
+className
+integer
+iffy
+whileLoop
+
+NUM_CHECKS
+0
+1
+5
+10
+42
+12345
+
+00
+01
+07
+017
+0123
+
+0x0
+0x1
+0xA
+0xF
+0x1A
+0xFF
+0xdeadbeef
+0XABC
+
+HEXA_CHECK
+
+0xaffff
+
+OCTAL_CHECK
+
+010101010
+
+OPERATOR_CEHCK
++
+-
+*
+/
+<
+>
+!
+=
+4 + 4 = 8
+4 -2 = 2
+4 * 4 = 16
+4 / 4 = 1
+4 != 5
+
+PUNCH_CHECK
+{  }
+[  ]
+(  )
+;
+.
+
+RESERVED CHECK 
+String 
+int
+while
+if 
+else
+if else
+
+
+SPEACIAL_CHECK 
+==
+&& 
+||
+
+STRING_CHECK
+
+"hello"
+"hello world"
+"1234"
+"A reserved word is for"
+"UPPERCASE LETTERS"
+"Operators + = - *"
