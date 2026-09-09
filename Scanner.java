@@ -10,7 +10,7 @@ public class Scanner{
     public enum CharType
     {LETTER, HEXLETTER, EX, DIGIT, ZERO, WHITESPACE, PLUS, MINUS, STAR,
      FORWARDSLASH, LPAREN, RPAREN, LBRACE, RBRACE, SEMICOLON, COMMA,
-     LESSTHAN, GREATERTHAN, ASSIGN, OTHER, BANG, QOUTE, AMPERSAND, PIPE, PERIOD};
+     LESSTHAN, GREATERTHAN, ASSIGN, OTHER, BANG, QOUTE, AMPERSAND, PIPE, PERIOD, UNDERSCORE, LSQUARE, RSQUARE};
 
 
 
@@ -21,10 +21,12 @@ public class Scanner{
     {START, IDBUILDING, ACCEPT, ERROR, NUMBUILDING, STRINGBUILDING, OPBUILDER,
      PUNC, EQUALS, AND, OR, ZERO, HEXSTART, HEXBUILDING, OCTALBUILDING};
     
+    //asked claude to make a hashed reserved list
     private static final java.util.Set<String> RESERVED = new java.util.HashSet<>(
     java.util.Arrays.asList("class", "public", "static", "void", "main",
                              "String", "extends", "return", "int", "Boolean",
-                             "if", "else", "while", "true", "false", "for"));
+                             "if", "else", "while", "true", "false", "for",
+                             "Xinu.print", "Xinu.println", "Xinu.printint", "Xinu.readint"));
 
 
 
@@ -137,6 +139,9 @@ public class Scanner{
         // Nothing extends a PUNC token; driver treats PUNC as accepting.
 
         set(table, State.START, CharType.PERIOD, State.PUNC);
+        set(table, State.IDBUILDING, CharType.UNDERSCORE, State.IDBUILDING);
+        set(table, State.START, CharType.LSQUARE, State.PUNC); 
+        set(table, State.START, CharType.RSQUARE, State.PUNC); 
 
         return table;
     }
@@ -188,6 +193,9 @@ public class Scanner{
         characterClass['\n'] = CharType.WHITESPACE;
         characterClass['\r'] = CharType.WHITESPACE;
         characterClass['.'] = CharType.PERIOD;
+        characterClass['_'] = CharType.UNDERSCORE;
+        characterClass['['] = CharType.LSQUARE;
+        characterClass[']'] = CharType.RSQUARE;
     }
     private int prev;
     private int temp;
@@ -204,7 +212,7 @@ public class Scanner{
     public int buffer(java.io.Reader reader) throws java.io.IOException{
         if (pushedBack) {
             pushedBack = false;
-            return temp; // re-deliver the same char instead of reading a new one
+            return temp; 
         }
         prev = temp;
         temp = reader.read();
@@ -253,7 +261,7 @@ public class Scanner{
             case '*': 
                 return "STAR";
             case '/': 
-                return "DIVIDE";
+                return "FORWARDSLASH";
             case '<': 
                 return "LESSTHAN";
             case '>': 
@@ -282,6 +290,10 @@ public class Scanner{
                 return "COMMA";
             case '.': 
                 return "PERIOD";
+            case '[':
+                return "LSQUARE";
+            case ']':
+                return "RSQUARE";
             default:  
                 return "PUNC";
         }
@@ -304,7 +316,7 @@ public class Scanner{
                 if (lexeme.isEmpty()) {
                     return "EOF";
                 }
-                if (isAcceptable(state)) {
+                if (isGoodState(state)) {
                     return finishToken(state, lexeme);
                 }
                 // e.g. lone '&' or '|' with nothing after it, or an unterminated string
@@ -414,14 +426,13 @@ public class Scanner{
                         case OR:
                             return "OR";        
                     default:
-                        //TODO
-                        System.err.println("ERROR: unexpected prevState before ACCEPT: " + prevState);
+                        System.err.println("ERROR wrong state prior: " + prevState);
                         return "Illegal token.";
                     }
 
                 case ERROR:
-                    if (isAcceptable(prevState) && !lexeme.isEmpty()) {
-                        if (!lexeme.isBlank()){
+                    if (isGoodState(prevState)) {
+                        if (!lexeme.isEmpty()){
                             pushback();
                             return finishToken(prevState, lexeme);
                         }
@@ -438,7 +449,7 @@ public class Scanner{
 
     // States where running into ERROR on the *next* char just means
     // "the token is finished," not "this is invalid."
-    private boolean isAcceptable(State s) {
+    private boolean isGoodState(State s) {
         switch (s) {
             case IDBUILDING:
                 return true;
@@ -468,9 +479,9 @@ public class Scanner{
             case ZERO:
                 return "INTEGER_LITERAL(" + lexeme + ")";
             case OCTALBUILDING:
-                return "INTEGER_LITERAL(" + lexeme + ")";
+                return "OCTAL_LITERAL(" + lexeme + ")";
             case HEXBUILDING:
-                return "INTEGER_LITERAL(" + lexeme + ")";
+                return "HEXADECIMAL_LITERAL(" + lexeme + ")";
             case STRINGBUILDING:
                 return "STRING_LITERAL(" + lexeme + ")";
             case OPBUILDER:
