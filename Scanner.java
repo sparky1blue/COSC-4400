@@ -10,7 +10,7 @@ public class Scanner{
     public enum CharType
     {LETTER, HEXLETTER, EX, DIGIT, ZERO, WHITESPACE, PLUS, MINUS, STAR,
      FORWARDSLASH, LPAREN, RPAREN, LBRACE, RBRACE, SEMICOLON, COMMA,
-     LESSTHAN, GREATERTHAN, ASSIGN, OTHER, BANG, QOUTE, AMPERSAND, PIPE};
+     LESSTHAN, GREATERTHAN, ASSIGN, OTHER, BANG, QOUTE, AMPERSAND, PIPE, PERIOD};
 
 
 
@@ -28,7 +28,6 @@ public class Scanner{
 
 
 
-    //claude code
     
     public State next_state[][] = buildNextStateTable();
 
@@ -40,7 +39,7 @@ public class Scanner{
         for (State[] row : table) {
             java.util.Arrays.fill(row, State.ERROR);
         }
-
+        //claude made table, asked it to made the table that i had drawn up, i wasnt expecting it to do it the way it did but its so much easier to read this way. 
         // ================= START =================
         // No characters consumed yet.
         set(table, State.START, CharType.LETTER,       State.IDBUILDING);   // begins an identifier/keyword
@@ -137,6 +136,8 @@ public class Scanner{
         // Accepts: single-char punctuation "(" ")" "{" "}" ";" ","
         // Nothing extends a PUNC token; driver treats PUNC as accepting.
 
+        set(table, State.START, CharType.PERIOD, State.PUNC);
+
         return table;
     }
 
@@ -155,7 +156,6 @@ public class Scanner{
         for (int i = '0'; i <= '9'; i++)
             characterClass[i] = CharType.DIGIT;
 
-        // overrides -- must come after the loops above
         characterClass['0'] = CharType.ZERO;
 
         for (int i = 'a'; i <= 'f'; i++)
@@ -187,11 +187,11 @@ public class Scanner{
         characterClass['\t'] = CharType.WHITESPACE;
         characterClass['\n'] = CharType.WHITESPACE;
         characterClass['\r'] = CharType.WHITESPACE;
+        characterClass['.'] = CharType.PERIOD;
     }
     private int prev;
     private int temp;
     
-    //fix
     private boolean isHex(int c) {
         if (c == -1){
             return false;
@@ -217,14 +217,22 @@ public class Scanner{
 
     private String compoundOpName(String lexeme) {
         switch (lexeme) {
-            case "+=": return "PLUSEQUALS";
-            case "-=": return "MINUSEQUALS";
-            case "*=": return "STAREQUALS";
-            case "/=": return "DIVIDEEQUALS";
-            case "<=": return "LESSEQUAL";
-            case ">=": return "GREATEREQUAL";
-            case "!=": return "NOTEQUAL";
-            default:   return "OP(" + lexeme + ")";
+            case "+=": 
+                return "PLUSEQUALS";
+            case "-=": 
+                return "MINUSEQUALS";
+            case "*=": 
+                return "STAREQUALS";
+            case "/=": 
+                return "DIVIDEEQUALS";
+            case "<=": 
+                return "LESSEQUAL";
+            case ">=": 
+                return "GREATEREQUAL";
+            case "!=": 
+                return "NOTEQUAL";
+            default:   
+                return "OP(" + lexeme + ")";
         }
     }
 
@@ -238,27 +246,44 @@ public class Scanner{
 
     private String singleOpName(char c) {
         switch (c) {
-            case '+': return "PLUS";
-            case '-': return "MINUS";
-            case '*': return "STAR";
-            case '/': return "DIVIDE";
-            case '<': return "LESSTHAN";
-            case '>': return "GREATERTHAN";
-            case '!': return "BANG";
+            case '+': 
+                return "PLUS";
+            case '-': 
+                return "MINUS";
+            case '*': 
+                return "STAR";
+            case '/': 
+                return "DIVIDE";
+            case '<': 
+                return "LESSTHAN";
+            case '>': 
+                return "GREATERTHAN";
+            case '!': 
+                return "BANG";
             case '=': return "ASSIGN";
-            default:  return "OP";
+            default:  
+                return "OP";
         }
     }
 
     private String puncName(char c) {
         switch (c) {
-            case '(': return "LPAREN";
-            case ')': return "RPAREN";
-            case '{': return "LBRACE";
-            case '}': return "RBRACE";
-            case ';': return "SEMICOLON";
-            case ',': return "COMMA";
-            default:  return "PUNC";
+            case '(': 
+                return "LPAREN";
+            case ')': 
+                return "RPAREN";
+            case '{': 
+                return "LBRACE";
+            case '}': 
+                return "RBRACE";
+            case ';': 
+                return "SEMICOLON";
+            case ',': 
+                return "COMMA";
+            case '.': 
+                return "PERIOD";
+            default:  
+                return "PUNC";
         }
     }
    
@@ -282,10 +307,8 @@ public class Scanner{
                 if (isAcceptable(state)) {
                     return finishToken(state, lexeme);
                 }
-                if (state == State.STRINGBUILDING) {
-                    return "Illegal token."; // unterminated string literal at EOF
-                }
-                return "EOF";
+                // e.g. lone '&' or '|' with nothing after it, or an unterminated string
+                return "Illegal token.";
             }
 
             CharType charClass = characterClass[c];
@@ -297,13 +320,17 @@ public class Scanner{
 
             switch (state){
                 case START:
-                    // whitespace — consume and keep looping, nothing to build yet
                     c = buffer(reader);
                     break;
 
                 case IDBUILDING:
                     lexeme = lexeme + (char) c;
                     c = buffer(reader);
+                    //special case for xinu
+                    if (lexeme.equals("Xinu") && c == '.') {
+                        lexeme = lexeme + (char) c;
+                        c = buffer(reader);
+                    }
                     break;
 
                 case NUMBUILDING:
@@ -314,6 +341,7 @@ public class Scanner{
                 case ZERO:
                     lexeme = lexeme + (char) c;
                     c = buffer(reader);
+                    //handles hex
                     if (c == 'x' || c == 'X') {
                         lexeme = lexeme + (char) c;
                         c = buffer(reader);
@@ -340,7 +368,6 @@ public class Scanner{
                     break;
 
                 case STRINGBUILDING:
-                    // don't store the opening quote itself in the lexeme (per D)
                     if (c != '"') {
                         lexeme = lexeme + (char) c;
                     }
@@ -368,12 +395,10 @@ public class Scanner{
                     break;
 
                 case PUNC:
-                    // single-char, done immediately, no lookahead consumption needed
                     return puncName((char) c);
 
                 case ACCEPT:
                     if (prevState == State.STRINGBUILDING) {
-                        // closing quote terminates the string but isn't part of its value
                         return "STRING_LITERAL(" + lexeme + ")";
                     }
 
@@ -383,21 +408,24 @@ public class Scanner{
                         case OPBUILDER:
                             return compoundOpName(lexeme);
                         case EQUALS:
-                            return "EQUAL";       // "=="
+                            return "EQUAL";       
                         case AND:
-                            return "AND";         // "&&"
+                            return "AND";    
                         case OR:
-                            return "OR";          // "||"
+                            return "OR";        
                     default:
+                        //TODO
                         System.err.println("ERROR: unexpected prevState before ACCEPT: " + prevState);
                         return "Illegal token.";
                     }
 
                 case ERROR:
                     if (isAcceptable(prevState) && !lexeme.isEmpty()) {
-                        // token actually ended one char ago -- back up and accept
-                        pushback();
-                        return finishToken(prevState, lexeme);
+                        if (!lexeme.isBlank()){
+                            pushback();
+                            return finishToken(prevState, lexeme);
+                        }
+                        
                     }
                     return "Illegal token.";
 
@@ -413,15 +441,21 @@ public class Scanner{
     private boolean isAcceptable(State s) {
         switch (s) {
             case IDBUILDING:
+                return true;
             case NUMBUILDING:
+                return true;
             case ZERO:
+                return true;
             case OCTALBUILDING:
+                return true;
             case HEXBUILDING:
+                return true;
             case OPBUILDER:
+                return true;
             case EQUALS:
                 return true;
             default:
-                return false; // AND, OR, START, etc. -- lone '&'/'|' really is illegal
+                return false; 
         }
     }
 
@@ -430,13 +464,17 @@ public class Scanner{
             case IDBUILDING:
                 return checkReserved(lexeme);
             case NUMBUILDING:
+                return "INTEGER_LITERAL(" + lexeme + ")";
             case ZERO:
+                return "INTEGER_LITERAL(" + lexeme + ")";
             case OCTALBUILDING:
+                return "INTEGER_LITERAL(" + lexeme + ")";
             case HEXBUILDING:
                 return "INTEGER_LITERAL(" + lexeme + ")";
             case STRINGBUILDING:
                 return "STRING_LITERAL(" + lexeme + ")";
             case OPBUILDER:
+                return singleOpName(lexeme.charAt(0));
             case EQUALS:
                 return singleOpName(lexeme.charAt(0));
             default:
