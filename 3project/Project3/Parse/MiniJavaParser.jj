@@ -1,0 +1,200 @@
+/* Copyright (C) 2007, 2013, Marquette University.  All rights reserved. */
+/* 2013 Jan 30 : Includes Xinu.* external calls and Concurrency syntax.  */
+
+PARSER_BEGIN(MiniJavaParser)
+  package Parse;
+  import java.util.LinkedList;
+  public class MiniJavaParser {}
+PARSER_END(MiniJavaParser)
+
+TOKEN_MGR_DECLS :
+{
+    static boolean anyErrors = false;
+    static void error(String msg)
+	{
+        	anyErrors = true;
+        	System.err.println(msg + ": line " + input_stream.getEndLine()
+                           + ", column " + input_stream.getEndColumn());
+    	}
+}
+
+/****************/
+/* White space. */
+/****************/
+SKIP :
+{
+	  " " | "\t" | "\n" | "\r" | "\f"
+}
+
+/*************************/
+/* Lexical Specification */
+/*************************/
+
+TOKEN :
+{
+
+	/* Reserved words. */
+	  < "class" >
+	| < "public" >
+	| < "static" >
+
+	/* Types. */
+	| < "void" >
+
+	/* Operators. */
+	| < "." >
+
+	/* Grouping tokens. */
+	| < "{" >
+	| < "}" >
+	| < "(" >
+	| < ")" >
+	| < "[" >
+	| < "]" >
+	| < ";" >
+	| < "," >
+
+	/* Reserved words that aren't really reserved in Java. */
+	| < "main" >
+	| < "String" > 
+	| < "Thread" > 
+	| < "Xinu" >
+}
+
+
+/************/
+/* Literals */
+/************/
+
+TOKEN :
+{
+	  < INT: ( "0" | ["1"-"9"] (["0"-"9"])* ) >
+	| < STRING: "\"" (~["\""])*  "\"" >
+}
+
+
+/***************/
+/* Identifiers */
+/***************/
+TOKEN :
+{
+	  < ID: <LETTER> (<LETTER>|<DIGIT>|<UNDER>)* >
+	| < #LETTER: ["A"-"Z","a"-"z"] >
+	| < #DIGIT: ["0"-"9"] >
+	| < #UNDER: "_" >
+}
+
+<DEFAULT>
+SKIP :
+{
+  <~[]> { error("Illegal token"); }
+}
+
+/********************/
+/* MiniJava Grammar */
+/********************/
+
+// Goal 	::= 	MainClass ( ClassDeclaration | ThreadDeclaration )* <EOF>
+Absyn.Program Goal() :
+{
+	LinkedList<Absyn.ClassDecl> cl = new LinkedList<Absyn.ClassDecl>();
+}
+{
+	MainClassDeclaration(cl) <EOF>
+	{ return new Absyn.Program(cl); }
+}
+
+// MainClass 	::= 	"class" Identifier "{" "public" "static" "void" "main" "(" "String" "[" "]" Identifier ")" "{" Statement "}" "}"
+Absyn.ClassDecl MainClassDeclaration(LinkedList<Absyn.ClassDecl> cl) :
+{
+	Absyn.ClassDecl  cd;
+	Absyn.Stmt stmt;
+	Absyn.VarDecl var;
+	Token name, arg;
+	LinkedList<Absyn.MethodDecl> methods = new LinkedList<Absyn.MethodDecl>();
+	LinkedList<Absyn.Formal> formals     = new LinkedList<Absyn.Formal>();
+	LinkedList<Absyn.VarDecl> locals     = new LinkedList<Absyn.VarDecl>();
+	LinkedList<Absyn.Stmt> stmts         = new LinkedList<Absyn.Stmt>();
+}
+{
+  "class" name = <ID> "{" "public" "static" "void" "main"
+	"(" "String" "[" "]" arg = <ID> ")"
+	{ formals.add(new Absyn.Formal(
+			new Absyn.ArrayType(	
+				new Absyn.IdentifierType("String")),
+					arg.toString())); }
+	"{" (LOOKAHEAD(VarDeclaration()) var = VarDeclaration()
+		{ locals.add(var); } )*
+	(stmt = Statement() { stmts.add(stmt); } )*
+	"}" "}"
+
+	{
+		methods.add(new Absyn.MethodDecl(null, false, "main", formals,
+				locals, stmts, new Absyn.IntegerLiteral(0)));
+		cd = new Absyn.ClassDecl(name.toString(),
+						null,
+						new LinkedList<Absyn.VarDecl>(), methods);
+		cl.add(cd);
+		return cd;
+	}
+}
+
+// VarDeclaration 	::= 	Type Identifier ( = Expression )? ";"
+Absyn.VarDecl VarDeclaration() :
+{
+	Absyn.Type type = null;
+	Token      name = null;
+	Absyn.Expr init = null;
+}
+{
+	type = Type() name = <ID> [ "=" init = Expression() ] ";"
+	{ return new Absyn.VarDecl(type, name.toString(), init); }
+}
+
+Absyn.Type Type() :
+{
+	Absyn.Type type;
+}
+{
+	type = BaseType()
+	( "[" "]" { type = new Absyn.ArrayType(type); } )*
+	{ return type; }
+}
+
+Absyn.Type BaseType() :
+{
+	Token name;
+}
+{
+	name = <ID>	{ return new Absyn.IdentifierType(name.toString()); }
+}
+
+Absyn.Stmt Statement() :
+{
+	Absyn.Stmt stmt;
+}
+{
+	stmt = XinuCallStatement()	{ return stmt; }
+}
+
+Absyn.XinuCallStmt XinuCallStatement() :
+{
+	Token method;
+	Absyn.Expr arg;
+	LinkedList<Absyn.Expr> args = new LinkedList<Absyn.Expr>();
+}
+{
+	"Xinu" "." method = <ID> 
+	"(" [ arg = Expression() { args.add(arg); }
+		( "," arg = Expression()  { args.add(arg); } )* ]
+	")" ";" { return new Absyn.XinuCallStmt(method.toString(), args); }
+}
+
+Absyn.Expr Expression() :
+{
+	Token t;
+}
+{
+        t=<STRING> { return new Absyn.StringLiteral(t.toString()); }
+}
+
