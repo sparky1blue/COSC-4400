@@ -11,20 +11,22 @@ public interface MiniJavaParserConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int INT = 23;
+  int INT = 51;
   /** RegularExpression Id. */
-  int STRING = 24;
+  int STRING = 52;
   /** RegularExpression Id. */
-  int ID = 25;
+  int ID = 53;
   /** RegularExpression Id. */
-  int LETTER = 26;
+  int LETTER = 54;
   /** RegularExpression Id. */
-  int DIGIT = 27;
+  int DIGIT = 55;
   /** RegularExpression Id. */
-  int UNDER = 28;
+  int UNDER = 56;
 
   /** Lexical state. */
   int DEFAULT = 0;
+  /** Lexical state. */
+  int IN_COMMENT = 1;
 
   /** Literal token values. */
   String[] tokenImage = {
@@ -34,11 +36,37 @@ public interface MiniJavaParserConstants {
     "\"\\n\"",
     "\"\\r\"",
     "\"\\f\"",
+    "<token of kind 6>",
+    "\"/*\"",
+    "\"*/\"",
+    "<token of kind 9>",
     "\"class\"",
     "\"public\"",
     "\"static\"",
+    "\"true\"",
+    "\"false\"",
+    "\"new\"",
+    "\"if\"",
+    "\"else\"",
+    "\"while\"",
+    "\"extends\"",
+    "\"synchronized\"",
+    "\"return\"",
     "\"void\"",
+    "\"int\"",
+    "\"boolean\"",
     "\".\"",
+    "\"=\"",
+    "\"!\"",
+    "\"*\"",
+    "\"+\"",
+    "\"-\"",
+    "\"<\"",
+    "\"&&\"",
+    "\">\"",
+    "\"==\"",
+    "\"!=\"",
+    "\"/\"",
     "\"{\"",
     "\"}\"",
     "\"(\"",
@@ -51,14 +79,15 @@ public interface MiniJavaParserConstants {
     "\"String\"",
     "\"Thread\"",
     "\"Xinu\"",
+    "\"this\"",
+    "\"null\"",
     "<INT>",
     "<STRING>",
     "<ID>",
     "<LETTER>",
     "<DIGIT>",
     "\"_\"",
-    "<token of kind 29>",
-    "\"=\"",
+    "<token of kind 57>",
   };
 
 }

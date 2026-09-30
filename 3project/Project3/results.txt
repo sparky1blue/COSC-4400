@@ -1,0 +1,912 @@
+]633;E;for file in testcases/*.java;363b139f-2707-4372-a9d7-ee7fa87ac117]633;C===== testcases/case3.java =====
+Program(
+ AbstractList(
+  ClassDecl(case3 null
+   AbstractList()
+   AbstractList(
+    MethodDecl(public_static_void main
+     AbstractList(
+      Formal(ArrayType(IdentifierType(String)) args))
+     AbstractList(
+      VarDecl(IntegerType a
+      IntegerLiteral(5))
+      VarDecl(IntegerType b
+      IntegerLiteral(2))
+      VarDecl(IntegerType arr
+      IntegerLiteral(9))
+      VarDecl(BooleanType t
+      TrueExpr))
+     AbstractList(
+      AssignStmt(
+       IdentifierExpr(a)
+       IntegerLiteral(10))
+      AssignStmt(
+       IdentifierExpr(b)
+       AddExpr(
+        IdentifierExpr(a)
+        IntegerLiteral(1)))
+      AssignStmt(
+       ArrayExpr(
+        IdentifierExpr(arr)
+        IntegerLiteral(0))
+       IntegerLiteral(5))
+      AssignStmt(
+       ArrayExpr(
+        IdentifierExpr(arr)
+        IdentifierExpr(a))
+       AddExpr(
+        IdentifierExpr(b)
+        IntegerLiteral(1)))
+      BlockStmt(
+       AbstractList(
+        AssignStmt(
+         IdentifierExpr(a)
+         IntegerLiteral(1))
+        AssignStmt(
+         IdentifierExpr(b)
+         IntegerLiteral(2))))
+      IfStmt(
+       LesserExpr(
+        IdentifierExpr(a)
+        IdentifierExpr(b))
+       BlockStmt(
+        AbstractList(
+         AssignStmt(
+          IdentifierExpr(a)
+          IntegerLiteral(1))))
+       null)
+      IfStmt(
+       IdentifierExpr(t)
+       BlockStmt(
+        AbstractList(
+         AssignStmt(
+          IdentifierExpr(a)
+          IntegerLiteral(1))))
+       BlockStmt(
+        AbstractList(
+         AssignStmt(
+          IdentifierExpr(a)
+          IntegerLiteral(2)))))
+      IfStmt(
+       LesserExpr(
+        IdentifierExpr(a)
+        IdentifierExpr(b))
+       BlockStmt(
+        AbstractList(
+         IfStmt(
+          IdentifierExpr(t)
+          BlockStmt(
+           AbstractList(
+            AssignStmt(
+             IdentifierExpr(a)
+             IntegerLiteral(1))))
+          BlockStmt(
+           AbstractList(
+            AssignStmt(
+             IdentifierExpr(a)
+             IntegerLiteral(2)))))))
+       BlockStmt(
+        AbstractList(
+         AssignStmt(
+          IdentifierExpr(a)
+          IntegerLiteral(3)))))
+      WhileStmt(
+       LesserExpr(
+        IdentifierExpr(a)
+        IntegerLiteral(10))
+       BlockStmt(
+        AbstractList(
+         AssignStmt(
+          IdentifierExpr(a)
+          AddExpr(
+           IdentifierExpr(a)
+           IntegerLiteral(1))))))
+      WhileStmt(
+       LesserExpr(
+        IdentifierExpr(a)
+        IdentifierExpr(b))
+       BlockStmt(
+        AbstractList(
+         AssignStmt(
+          IdentifierExpr(a)
+          AddExpr(
+           IdentifierExpr(a)
+           IntegerLiteral(1)))
+         AssignStmt(
+          IdentifierExpr(b)
+          SubExpr(
+           IdentifierExpr(b)
+           IntegerLiteral(1))))))
+      IfStmt(
+       IdentifierExpr(t)
+       BlockStmt(
+        AbstractList(
+         WhileStmt(
+          LesserExpr(
+           IdentifierExpr(a)
+           IntegerLiteral(5))
+          BlockStmt(
+           AbstractList(
+            AssignStmt(
+             IdentifierExpr(a)
+             AddExpr(
+              IdentifierExpr(a)
+              IntegerLiteral(1))))))))
+       null)
+      XinuCallStmt(print
+       AbstractList(
+        IdentifierExpr(a)))
+      XinuCallStmt(print
+       AbstractList(
+        IdentifierExpr(b)))
+      XinuCallStmt(print
+       AbstractList(
+        ArrayExpr(
+         IdentifierExpr(arr)
+         IdentifierExpr(a)))))
+     IntegerLiteral(0))))))
+===== testcases/Hello.java =====
+Program(
+ AbstractList(
+  ClassDecl(Hello null
+   AbstractList()
+   AbstractList(
+    MethodDecl(public_static_void main
+     AbstractList(
+      Formal(ArrayType(IdentifierType(String)) args))
+     AbstractList(
+      VarDecl(IntegerType a
+      IntegerLiteral(5))
+      VarDecl(IntegerType b
+      IntegerLiteral(2))
+      VarDecl(BooleanType t
+      TrueExpr)
+      VarDecl(BooleanType f
+      FalseExpr)
+      VarDecl(IntegerType arr
+      IntegerLiteral(9)))
+     AbstractList(
+      XinuCallStmt(print
+       AbstractList(
+        IntegerLiteral(4)))
+      XinuCallStmt(print
+       AbstractList(
+        StringLiteral("hello")))
+      XinuCallStmt(print
+       AbstractList(
+        TrueExpr))
+      XinuCallStmt(print
+       AbstractList(
+        FalseExpr))
+      XinuCallStmt(print
+       AbstractList(
+        IdentifierExpr(a)))
+      XinuCallStmt(print
+       AbstractList(
+        IdentifierExpr(t)))
+      XinuCallStmt(print
+       AbstractList(
+        ThisExpr))
+      XinuCallStmt(print
+       AbstractList(
+        NotExpr(
+         IdentifierExpr(t))))
+      XinuCallStmt(print
+       AbstractList(
+        NotExpr(
+         IdentifierExpr(f))))
+      XinuCallStmt(print
+       AbstractList(
+        MulExpr(
+         IdentifierExpr(a)
+         IdentifierExpr(b))))
+      XinuCallStmt(print
+       AbstractList(
+        MulExpr(
+         MulExpr(
+          IdentifierExpr(a)
+          IdentifierExpr(b))
+         IntegerLiteral(3))))
+      XinuCallStmt(print
+       AbstractList(
+        AddExpr(
+         IdentifierExpr(a)
+         IdentifierExpr(b))))
+      XinuCallStmt(print
+       AbstractList(
+        SubExpr(
+         IdentifierExpr(a)
+         IdentifierExpr(b))))
+      XinuCallStmt(print
+       AbstractList(
+        AddExpr(
+         IdentifierExpr(a)
+         MulExpr(
+          IdentifierExpr(b)
+          IntegerLiteral(3)))))
+      XinuCallStmt(print
+       AbstractList(
+        SubExpr(
+         IdentifierExpr(a)
+         MulExpr(
+          IdentifierExpr(b)
+          IntegerLiteral(3)))))
+      XinuCallStmt(print
+       AbstractList(
+        LesserExpr(
+         IdentifierExpr(a)
+         IdentifierExpr(b))))
+      XinuCallStmt(print
+       AbstractList(
+        LesserExpr(
+         AddExpr(
+          IdentifierExpr(a)
+          IntegerLiteral(1))
+         MulExpr(
+          IdentifierExpr(b)
+          IntegerLiteral(3)))))
+      XinuCallStmt(print
+       AbstractList(
+        AndExpr(
+         IdentifierExpr(t)
+         IdentifierExpr(f))))
+      XinuCallStmt(print
+       AbstractList(
+        AndExpr(
+         LesserExpr(
+          IdentifierExpr(a)
+          IdentifierExpr(b))
+         IdentifierExpr(t))))
+      XinuCallStmt(print
+       AbstractList(
+        ArrayExpr(
+         IdentifierExpr(arr)
+         IdentifierExpr(a))))
+      XinuCallStmt(print
+       AbstractList(
+        ArrayExpr(
+         IdentifierExpr(arr)
+         AddExpr(
+          IdentifierExpr(a)
+          IntegerLiteral(1)))))
+      XinuCallStmt(print
+       AbstractList(
+        ArrayExpr(
+         ArrayExpr(
+          IdentifierExpr(arr)
+          IdentifierExpr(a))
+         IdentifierExpr(b))))
+      XinuCallStmt(print
+       AbstractList(
+        CallExpr(
+         IdentifierExpr(a)
+         compute
+         AbstractList())))
+      XinuCallStmt(print
+       AbstractList(
+        CallExpr(
+         IdentifierExpr(a)
+         compute
+         AbstractList(
+          IntegerLiteral(1)))))
+      XinuCallStmt(print
+       AbstractList(
+        CallExpr(
+         IdentifierExpr(a)
+         compute
+         AbstractList(
+          IntegerLiteral(1)
+          IntegerLiteral(2)))))
+      XinuCallStmt(print
+       AbstractList(
+        CallExpr(
+         IdentifierExpr(a)
+         compute
+         AbstractList(
+          AddExpr(
+           IdentifierExpr(b)
+           IntegerLiteral(1))
+          AndExpr(
+           IdentifierExpr(t)
+           IdentifierExpr(f))))))
+      XinuCallStmt(print
+       AbstractList(
+        CallExpr(
+         CallExpr(
+          IdentifierExpr(a)
+          compute
+          AbstractList(
+           IntegerLiteral(1)))
+         next
+         AbstractList(
+          IntegerLiteral(2)))))
+      XinuCallStmt(print
+       AbstractList(
+        AndExpr(
+         IdentifierExpr(t)
+         MulExpr(
+          CallExpr(
+           ArrayExpr(
+            IdentifierExpr(arr)
+            IdentifierExpr(a))
+           compute
+           AbstractList(
+            IdentifierExpr(b)
+            IntegerLiteral(3)))
+          IntegerLiteral(2)))))
+      XinuCallStmt(print
+       AbstractList(
+        NewArrayExpr(IntegerType
+         AbstractList(
+          IntegerLiteral(10)))))
+      XinuCallStmt(print
+       AbstractList(
+        NewObjectExpr(IdentifierType(Foo))))
+      XinuCallStmt(print
+       AbstractList(
+        MulExpr(
+         AddExpr(
+          IntegerLiteral(2)
+          IntegerLiteral(3))
+         IntegerLiteral(4))))
+      XinuCallStmt(print
+       AbstractList(
+        FieldExpr(
+         IdentifierExpr(arr)
+         length))))
+     IntegerLiteral(0))))))
+===== testcases/testAssign.java =====
+Program(
+ AbstractList(
+  ClassDecl(testAssign null
+   AbstractList()
+   AbstractList(
+    MethodDecl(public_static_void main
+     AbstractList(
+      Formal(ArrayType(IdentifierType(String)) args))
+     AbstractList(
+      VarDecl(IntegerType a null)
+      VarDecl(IntegerType arr null))
+     AbstractList(
+      AssignStmt(
+       IdentifierExpr(a)
+       IntegerLiteral(5))
+      AssignStmt(
+       ArrayExpr(
+        IdentifierExpr(arr)
+        IntegerLiteral(0))
+       IntegerLiteral(10)))
+     IntegerLiteral(0))))))
+===== testcases/testBlock.java =====
+Program(
+ AbstractList(
+  ClassDecl(testBlock null
+   AbstractList()
+   AbstractList(
+    MethodDecl(public_static_void main
+     AbstractList(
+      Formal(ArrayType(IdentifierType(String)) args))
+     AbstractList()
+     AbstractList(
+      BlockStmt(
+       AbstractList(
+        XinuCallStmt(print
+         AbstractList(
+          IntegerLiteral(1)))
+        XinuCallStmt(print
+         AbstractList(
+          IntegerLiteral(2))))))
+     IntegerLiteral(0))))))
+===== testcases/testClass.java =====
+Program(
+ AbstractList(
+  ClassDecl(testClass null
+   AbstractList()
+   AbstractList(
+    MethodDecl(public_static_void main
+     AbstractList(
+      Formal(ArrayType(IdentifierType(String)) a))
+     AbstractList()
+     AbstractList(
+      XinuCallStmt(printint
+       AbstractList(
+        CallExpr(
+         NewObjectExpr(IdentifierType(Fac))
+         ComputeFac
+         AbstractList(
+          IntegerLiteral(10))))))
+     IntegerLiteral(0))))
+  ClassDecl(Fac null
+   AbstractList(
+    VarDecl(IntegerType count null))
+   AbstractList(
+    MethodDecl(IntegerType ComputeFac
+     AbstractList(
+      Formal(IntegerType num))
+     AbstractList(
+      VarDecl(IntegerType num_aux null))
+     AbstractList(
+      IfStmt(
+       LesserExpr(
+        IdentifierExpr(num)
+        IntegerLiteral(1))
+       AssignStmt(
+        IdentifierExpr(num_aux)
+        IntegerLiteral(1))
+       AssignStmt(
+        IdentifierExpr(num_aux)
+        MulExpr(
+         IdentifierExpr(num)
+         CallExpr(
+          ThisExpr
+          ComputeFac
+          AbstractList(
+           SubExpr(
+            IdentifierExpr(num)
+            IntegerLiteral(1))))))))
+     IdentifierExpr(num_aux))))))
+===== testcases/testExtends.java =====
+Program(
+ AbstractList(
+  ClassDecl(testExtends null
+   AbstractList()
+   AbstractList(
+    MethodDecl(public_static_void main
+     AbstractList(
+      Formal(ArrayType(IdentifierType(String)) args))
+     AbstractList(
+      VarDecl(IdentifierType(Data) d null)
+      VarDecl(IdentifierType(Worker) w null)
+      VarDecl(IdentifierType(Data) nt null))
+     AbstractList(
+      AssignStmt(
+       IdentifierExpr(d)
+       NewObjectExpr(IdentifierType(Data)))
+      AssignStmt(
+       IdentifierExpr(w)
+       NewObjectExpr(IdentifierType(Worker)))
+      AssignStmt(
+       IdentifierExpr(nt)
+       CallExpr(
+        IdentifierExpr(w)
+        setData
+        AbstractList(
+         IdentifierExpr(d))))
+      XinuCallStmt(threadCreate
+       AbstractList(
+        IdentifierExpr(w))))
+     IntegerLiteral(0))))
+  ThreadDecl(Worker Thread
+   AbstractList(
+    VarDecl(IdentifierType(Data) d null)
+    VarDecl(IntegerType x null))
+   AbstractList(
+    VoidDecl(run
+     AbstractList()
+     AbstractList(
+      AssignStmt(
+       IdentifierExpr(x)
+       CallExpr(
+        IdentifierExpr(d)
+        increment
+        AbstractList()))))
+    MethodDecl(IdentifierType(Data) setData
+     AbstractList(
+      Formal(IdentifierType(Data) dd))
+     AbstractList()
+     AbstractList(
+      AssignStmt(
+       IdentifierExpr(d)
+       IdentifierExpr(dd)))
+     IdentifierExpr(d))))
+  ClassDecl(Data null
+   AbstractList(
+    VarDecl(IntegerType field null))
+   AbstractList(
+    MethodDecl(IntegerType synchronized increment
+     AbstractList()
+     AbstractList()
+     AbstractList(
+      AssignStmt(
+       IdentifierExpr(field)
+       AddExpr(
+        IdentifierExpr(field)
+        IntegerLiteral(1))))
+     IdentifierExpr(field))))))
+===== testcases/testFieldAccess.java =====
+Program(
+ AbstractList(
+  ClassDecl(testFieldAccess null
+   AbstractList()
+   AbstractList(
+    MethodDecl(public_static_void main
+     AbstractList(
+      Formal(ArrayType(IdentifierType(String)) args))
+     AbstractList(
+      VarDecl(IdentifierType(Node) n null)
+      VarDecl(IntegerType v null))
+     AbstractList(
+      AssignStmt(
+       IdentifierExpr(n)
+       NewObjectExpr(IdentifierType(Node)))
+      AssignStmt(
+       IdentifierExpr(v)
+       FieldExpr(
+        IdentifierExpr(n)
+        value))
+      AssignStmt(
+       IdentifierExpr(v)
+       FieldExpr(
+        FieldExpr(
+         IdentifierExpr(n)
+         next)
+        value))
+      AssignStmt(
+       IdentifierExpr(v)
+       FieldExpr(
+        ThisExpr
+        count)))
+     IntegerLiteral(0))))
+  ClassDecl(Node null
+   AbstractList(
+    VarDecl(IntegerType value null)
+    VarDecl(IdentifierType(Node) next null))
+   AbstractList())))
+===== testcases/testIf.java =====
+Program(
+ AbstractList(
+  ClassDecl(testIf null
+   AbstractList()
+   AbstractList(
+    MethodDecl(public_static_void main
+     AbstractList(
+      Formal(ArrayType(IdentifierType(String)) a))
+     AbstractList(
+      VarDecl(IntegerType x null)
+      VarDecl(IntegerType y null)
+      VarDecl(BooleanType t null))
+     AbstractList(
+      AssignStmt(
+       IdentifierExpr(x)
+       IntegerLiteral(5))
+      AssignStmt(
+       IdentifierExpr(y)
+       IntegerLiteral(2))
+      AssignStmt(
+       IdentifierExpr(t)
+       TrueExpr)
+      AssignStmt(
+       IdentifierExpr(x)
+       NegExpr(
+        IntegerLiteral(1)))
+      AssignStmt(
+       IdentifierExpr(x)
+       NegExpr(
+        IdentifierExpr(y)))
+      AssignStmt(
+       IdentifierExpr(x)
+       DivExpr(
+        IntegerLiteral(10)
+        IntegerLiteral(2)))
+      AssignStmt(
+       IdentifierExpr(x)
+       DivExpr(
+        IntegerLiteral(10)
+        IdentifierExpr(y)))
+      XinuCallStmt(print
+       AbstractList(
+        GreaterExpr(
+         IdentifierExpr(x)
+         IdentifierExpr(y))))
+      XinuCallStmt(print
+       AbstractList(
+        EqualExpr(
+         IdentifierExpr(x)
+         IdentifierExpr(y))))
+      XinuCallStmt(print
+       AbstractList(
+        NotEqExpr(
+         IdentifierExpr(x)
+         IdentifierExpr(y))))
+      XinuCallStmt(print
+       AbstractList(
+        NullExpr))
+      XinuCallStmt(print
+       AbstractList(
+        EqualExpr(
+         AddExpr(
+          IdentifierExpr(x)
+          IntegerLiteral(1))
+         MulExpr(
+          IdentifierExpr(y)
+          IntegerLiteral(2)))))
+      XinuCallStmt(print
+       AbstractList(
+        NotEqExpr(
+         SubExpr(
+          IdentifierExpr(x)
+          IntegerLiteral(1))
+         DivExpr(
+          IdentifierExpr(y)
+          IntegerLiteral(2)))))
+      XinuCallStmt(print
+       AbstractList(
+        GreaterExpr(
+         NegExpr(
+          IdentifierExpr(x))
+         NegExpr(
+          IdentifierExpr(y)))))
+      XinuCallStmt(print
+       AbstractList(
+        AndExpr(
+         NotExpr(
+          EqualExpr(
+           IdentifierExpr(x)
+           IdentifierExpr(y)))
+         GreaterExpr(
+          IdentifierExpr(x)
+          IdentifierExpr(y))))))
+     IntegerLiteral(0))))))
+===== testcases/testInt.java =====
+Program(
+ AbstractList(
+  ClassDecl(testInt null
+   AbstractList()
+   AbstractList(
+    MethodDecl(public_static_void main
+     AbstractList(
+      Formal(ArrayType(IdentifierType(String)) args))
+     AbstractList(
+      VarDecl(IntegerType x
+      IntegerLiteral(5))
+      VarDecl(BooleanType y
+      TrueExpr)
+      VarDecl(BooleanType j
+      FalseExpr))
+     AbstractList(
+      XinuCallStmt(print
+       AbstractList(
+        IntegerLiteral(4)))
+      XinuCallStmt(print
+       AbstractList(
+        IdentifierExpr(x)))
+      XinuCallStmt(print
+       AbstractList(
+        IdentifierExpr(y)))
+      XinuCallStmt(print
+       AbstractList(
+        IdentifierExpr(j)))
+      XinuCallStmt(print
+       AbstractList(
+        ThisExpr))
+      XinuCallStmt(print
+       AbstractList(
+        NotExpr(
+         TrueExpr)))
+      XinuCallStmt(print
+       AbstractList(
+        MulExpr(
+         MulExpr(
+          IntegerLiteral(4)
+          IntegerLiteral(8))
+         IntegerLiteral(5))))
+      XinuCallStmt(print
+       AbstractList(
+        AddExpr(
+         IntegerLiteral(4)
+         MulExpr(
+          IntegerLiteral(3)
+          IntegerLiteral(4)))))
+      XinuCallStmt(print
+       AbstractList(
+        AddExpr(
+         IntegerLiteral(4)
+         MulExpr(
+          IntegerLiteral(3)
+          IntegerLiteral(4)))))
+      XinuCallStmt(print
+       AbstractList(
+        LesserExpr(
+         AddExpr(
+          IntegerLiteral(2)
+          IntegerLiteral(3))
+         MulExpr(
+          IntegerLiteral(4)
+          IntegerLiteral(5)))))
+      XinuCallStmt(print
+       AbstractList(
+        AndExpr(
+         TrueExpr
+         LesserExpr(
+          IntegerLiteral(2)
+          IntegerLiteral(3)))))
+      XinuCallStmt(print
+       AbstractList(
+        ArrayExpr(
+         IdentifierExpr(x)
+         IdentifierExpr(x))))
+      XinuCallStmt(print
+       AbstractList(
+        ArrayExpr(
+         IdentifierExpr(x)
+         AddExpr(
+          IdentifierExpr(x)
+          IntegerLiteral(1)))))
+      XinuCallStmt(print
+       AbstractList(
+        ArrayExpr(
+         ArrayExpr(
+          IdentifierExpr(x)
+          IdentifierExpr(x))
+         IntegerLiteral(2)))))
+     IntegerLiteral(0))))))
+===== testcases/testRegularExtends.java =====
+Program(
+ AbstractList(
+  ClassDecl(testRegularExtends null
+   AbstractList()
+   AbstractList(
+    MethodDecl(public_static_void main
+     AbstractList(
+      Formal(ArrayType(IdentifierType(String)) args))
+     AbstractList(
+      VarDecl(IdentifierType(Child) c null)
+      VarDecl(IntegerType x null))
+     AbstractList(
+      AssignStmt(
+       IdentifierExpr(c)
+       NewObjectExpr(IdentifierType(Child)))
+      AssignStmt(
+       IdentifierExpr(x)
+       CallExpr(
+        IdentifierExpr(c)
+        getValue
+        AbstractList())))
+     IntegerLiteral(0))))
+  ClassDecl(Parent null
+   AbstractList(
+    VarDecl(IntegerType value null))
+   AbstractList(
+    MethodDecl(IntegerType getValue
+     AbstractList()
+     AbstractList()
+     AbstractList()
+     IdentifierExpr(value))))
+  ClassDecl(Child Parent
+   AbstractList()
+   AbstractList(
+    MethodDecl(IntegerType getValue
+     AbstractList()
+     AbstractList()
+     AbstractList()
+     IntegerLiteral(42))))))
+===== testcases/testWhile.java =====
+Program(
+ AbstractList(
+  ClassDecl(testWhile null
+   AbstractList()
+   AbstractList(
+    MethodDecl(public_static_void main
+     AbstractList(
+      Formal(ArrayType(IdentifierType(String)) args))
+     AbstractList(
+      VarDecl(IntegerType a null)
+      VarDecl(IntegerType b null)
+      VarDecl(BooleanType t null))
+     AbstractList(
+      AssignStmt(
+       IdentifierExpr(a)
+       IntegerLiteral(0))
+      AssignStmt(
+       IdentifierExpr(b)
+       IntegerLiteral(10))
+      AssignStmt(
+       IdentifierExpr(t)
+       TrueExpr)
+      WhileStmt(
+       LesserExpr(
+        IdentifierExpr(a)
+        IntegerLiteral(10))
+       BlockStmt(
+        AbstractList(
+         AssignStmt(
+          IdentifierExpr(a)
+          AddExpr(
+           IdentifierExpr(a)
+           IntegerLiteral(1))))))
+      WhileStmt(
+       LesserExpr(
+        IdentifierExpr(a)
+        IdentifierExpr(b))
+       BlockStmt(
+        AbstractList(
+         AssignStmt(
+          IdentifierExpr(a)
+          AddExpr(
+           IdentifierExpr(a)
+           IntegerLiteral(1)))
+         AssignStmt(
+          IdentifierExpr(b)
+          SubExpr(
+           IdentifierExpr(b)
+           IntegerLiteral(1))))))
+      WhileStmt(
+       LesserExpr(
+        IdentifierExpr(a)
+        IntegerLiteral(20))
+       AssignStmt(
+        IdentifierExpr(a)
+        AddExpr(
+         IdentifierExpr(a)
+         IntegerLiteral(1))))
+      IfStmt(
+       IdentifierExpr(t)
+       BlockStmt(
+        AbstractList(
+         WhileStmt(
+          LesserExpr(
+           IdentifierExpr(a)
+           IntegerLiteral(5))
+          BlockStmt(
+           AbstractList(
+            AssignStmt(
+             IdentifierExpr(a)
+             AddExpr(
+              IdentifierExpr(a)
+              IntegerLiteral(1))))))))
+       null)
+      WhileStmt(
+       LesserExpr(
+        IdentifierExpr(a)
+        IntegerLiteral(30))
+       BlockStmt(
+        AbstractList(
+         IfStmt(
+          LesserExpr(
+           IdentifierExpr(a)
+           IntegerLiteral(25))
+          BlockStmt(
+           AbstractList(
+            AssignStmt(
+             IdentifierExpr(a)
+             AddExpr(
+              IdentifierExpr(a)
+              IntegerLiteral(2)))))
+          BlockStmt(
+           AbstractList(
+            AssignStmt(
+             IdentifierExpr(a)
+             AddExpr(
+              IdentifierExpr(a)
+              IntegerLiteral(1)))))))))
+      XinuCallStmt(print
+       AbstractList(
+        IdentifierExpr(a)))
+      XinuCallStmt(print
+       AbstractList(
+        IdentifierExpr(b))))
+     IntegerLiteral(0))))))
+===== testcases/testXinuExpr.java =====
+Program(
+ AbstractList(
+  ClassDecl(testXinuExpr null
+   AbstractList()
+   AbstractList(
+    MethodDecl(public_static_void main
+     AbstractList(
+      Formal(ArrayType(IdentifierType(String)) args))
+     AbstractList(
+      VarDecl(IntegerType x null))
+     AbstractList(
+      AssignStmt(
+       IdentifierExpr(x)
+       XinuCallExpr(readint
+        AbstractList()))
+      XinuCallStmt(printint
+       AbstractList(
+        IdentifierExpr(x)))
+      XinuCallStmt(printint
+       AbstractList(
+        XinuCallExpr(readint
+         AbstractList()))))
+     IntegerLiteral(0))))))

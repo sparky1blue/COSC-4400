@@ -1,3 +1,10 @@
+/**
+ * COSC 4400 - Project #
+ * Explain briefly the functionality of the program.
+ * @authors Jacob Stroebel, Val eherman
+ * Instructor [your instructor]
+ * TA-BOT:MAILTO jacob.stroebel@marquette.edu
+ */
 package Parse;
 
 import java.io.Reader;
