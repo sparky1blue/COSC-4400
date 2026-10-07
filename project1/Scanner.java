@@ -201,6 +201,7 @@ public class Scanner{
     private int temp;
     
     private boolean isHex(int c) {
+
         if (c == -1){
             return false;
         } 

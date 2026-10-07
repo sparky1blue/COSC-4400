@@ -1,0 +1,50 @@
+Program(
+ AbstractList(
+  ClassDecl(Testinherit null
+   AbstractList()
+   AbstractList(
+    MethodDecl(public_static_void main
+     AbstractList(
+      Formal(ArrayType(IdentifierType(String)) a))
+     AbstractList()
+     AbstractList(
+      XinuCallStmt(printint
+       AbstractList(
+        CallExpr(
+         NewObjectExpr(IdentifierType(Child))
+         Get
+         AbstractList()))))
+     IntegerLiteral(0))))
+  ClassDecl(Parent null
+   AbstractList(
+    VarDecl(IntegerType x null)
+    VarDecl(IntegerType y null))
+   AbstractList(
+    MethodDecl(IntegerType Get
+     AbstractList()
+     AbstractList()
+     AbstractList()
+     IdentifierExpr(x))
+    MethodDecl(IntegerType Set
+     AbstractList(
+      Formal(IntegerType v))
+     AbstractList()
+     AbstractList(
+      AssignStmt(
+       IdentifierExpr(x)
+       IdentifierExpr(v)))
+     IdentifierExpr(x))))
+  ClassDecl(Child Parent
+   AbstractList(
+    VarDecl(IntegerType z null))
+   AbstractList(
+    MethodDecl(IntegerType Get
+     AbstractList()
+     AbstractList()
+     AbstractList()
+     IdentifierExpr(z))
+    MethodDecl(IntegerType Extra
+     AbstractList()
+     AbstractList()
+     AbstractList()
+     IdentifierExpr(y))))))

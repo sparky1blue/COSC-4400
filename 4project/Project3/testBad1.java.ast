@@ -1,0 +1,29 @@
+Program(
+ AbstractList(
+  ClassDecl(testBad1 null
+   AbstractList()
+   AbstractList(
+    MethodDecl(public_static_void main
+     AbstractList(
+      Formal(ArrayType(IdentifierType(String)) a))
+     AbstractList()
+     AbstractList(
+      XinuCallStmt(printint
+       AbstractList(
+        CallExpr(
+         NewObjectExpr(IdentifierType(Foo))
+         Bar
+         AbstractList()))))
+     IntegerLiteral(0))))
+  ClassDecl(Foo null
+   AbstractList()
+   AbstractList(
+    MethodDecl(IntegerType Bar
+     AbstractList()
+     AbstractList(
+      VarDecl(IntegerType x null))
+     AbstractList(
+      AssignStmt(
+       IdentifierExpr(x)
+       TrueExpr))
+     IdentifierExpr(x))))))

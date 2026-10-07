@@ -1,0 +1,72 @@
+PARSER_BEGIN(LP1Parser)
+  public class LP1Parser{}
+PARSER_END(LP1Parser)
+
+/* WHITE SPACE */
+
+SKIP :
+{
+  " " | "\t" | "\n" | "\r" | "\f"
+}
+
+/* RESERVED WORDS, OPERATORS, etc  */
+
+TOKEN : 
+{
+  < PLUS:  "+" >
+| < MINUS: "-" >
+| < DIV:   "/" >
+| < MULT:  "*" >
+| <MOD : "%" >
+
+/* LITERALS */
+
+| < NUM: ( ["1"-"9"] (["0"-"9"])* | "0" ) >
+
+/* IDENTIFIERS */
+
+| < ID: <LETTER> (<LETTER>|<DIGIT>|<UNDER>)* >
+| < #LETTER: ["A"-"Z","a"-"z"] >
+| < #DIGIT: ["0"-"9"] >
+| < #UNDER: "_" >
+}
+
+/**************************************************
+ * The Left-Associative Example grammar           *
+ **************************************************/
+
+Absyn.Goal Goal() :
+{ Absyn.Exp e; }
+{
+  e = Expr() <EOF>   { return new Absyn.Goal(e); }
+}
+
+Absyn.Exp Expr() :
+{ Absyn.Exp left, right; }
+{
+   left = Term() 
+	(
+	  "+" right = Term()  {  left = new Absyn.AddExp(left,right); }
+	| "-" right = Term()  {  left = new Absyn.SubExp(left,right); }
+	)*
+   { return left; }
+}
+
+Absyn.Exp Term() :
+{ Absyn.Exp left, right; }
+{
+   left = Factor() 
+	(
+	  "*" right = Factor()  {  left = new Absyn.MulExp(left,right); }
+	| "/" right = Factor()  {  left = new Absyn.DivExp(left,right); }
+	| "%" right = Factor()  {  left = new Absyn.ModExp(left,right); }
+	)*
+   { return left; }
+}
+
+Absyn.Exp Factor() :
+{ Token t; }
+{
+   t = <NUM>   {  return new Absyn.NumExp(t.image);   }
+|  t = <ID>    {  return new Absyn.IdExp(t.image);    }
+}
