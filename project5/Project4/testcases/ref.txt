@@ -1,0 +1,46 @@
+
+CLASS(Factorial
+ null
+ RECORD(
+  FIELD(0 main
+   FUNCTION(main
+    OBJECT(Factorial)
+    RECORD(
+     FIELD(0 a
+      ARRAY(
+       OBJECT(String))))
+    VOID)))
+ RECORD()
+ OBJECT(Factorial
+  RECORD(
+   FIELD(0 main
+    FUNCTION(main
+     OBJECT(Factorial)
+     RECORD(
+      FIELD(0 a
+       ARRAY(
+        OBJECT(String))))
+     VOID)))
+  RECORD()))
+
+CLASS(Fac
+ null
+ RECORD(
+  FIELD(0 ComputeFac
+   FUNCTION(ComputeFac
+    OBJECT(Fac)
+    RECORD(
+     FIELD(0 num
+      INT))
+    INT)))
+ RECORD()
+ OBJECT(Fac
+  RECORD(
+   FIELD(0 ComputeFac
+    FUNCTION(ComputeFac
+     OBJECT(Fac)
+     RECORD(
+      FIELD(0 num
+       INT))
+     INT)))
+  RECORD()))
