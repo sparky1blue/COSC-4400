@@ -29,6 +29,37 @@ import Absyn.Stmt;
 import Absyn.ThreadDecl;
 import Absyn.VarDecl;
 import Absyn.VoidDecl;
+import Absyn.AddExpr;      
+import Absyn.AndExpr;       
+import Absyn.ArrayExpr;
+import Absyn.ArrayLength;  
+import Absyn.AssignStmt;    
+import Absyn.BlockStmt;
+import Absyn.CallExpr;     
+import Absyn.DivExpr;       
+import Absyn.EqualExpr;
+import Absyn.Expr;         
+import Absyn.FalseExpr;     
+import Absyn.FieldExpr;
+import Absyn.GreaterExpr;  
+import Absyn.IdentifierExpr; 
+import Absyn.IfStmt;
+import Absyn.IntegerLiteral; 
+import Absyn.LesserExpr;  
+import Absyn.MulExpr;
+import Absyn.NegExpr;      
+import Absyn.NewArrayExpr;  
+import Absyn.NewObjectExpr;
+import Absyn.NotEqExpr;    
+import Absyn.NotExpr;       
+import Absyn.NullExpr;
+import Absyn.StringLiteral; 
+import Absyn.SubExpr;      
+import Absyn.ThisExpr;
+import Absyn.TrueExpr;     
+import Absyn.WhileStmt;     
+import Absyn.XinuCallExpr;
+import Absyn.XinuCallStmt;
 
 
 public class Main {
@@ -54,19 +85,45 @@ public class Main {
         }
 
         Program program;
-        try {
-            program = AstReader.read(text.toString());
-        } catch (AstReader.FormatError e) {
-            System.err.println("bad AST: " + e.getMessage());
-            System.exit(1);
-            return;
+        if (text.toString().trim().startsWith("Program(")) {
+            try {
+                program = AstReader.read(text.toString());
+            } catch (AstReader.FormatError e) {
+                System.err.println("bad AST: " + e.getMessage());
+                System.exit(1);
+                return;
+            }
+        } else {
+            program = parseSource(text.toString());
         }
 
         TypeChecker checker = new TypeChecker();
+        checker.checkBodies = !classesOnly;  
         checker.visit(program);
-        System.out.print(checker.dump());
+        if (classesOnly) {
+            System.out.print(checker.dump());
+        } else if (checker.errors == 0) {
+            PrintVisitor printer = new PrintVisitor(new java.io.PrintWriter(System.out));
+            printer.notes = checker.notes;
+            printer.visit(program);
+            System.out.flush();
+        }
 
         if (checker.errors > 0) System.exit(1);
+    }
+
+    private static Program parseSource(String source) {
+        try {
+            Class<?> pc = Class.forName("Parse.MiniJavaParser");
+            Object parser = pc.getConstructor(Reader.class).newInstance(new java.io.StringReader(source));
+            return (Program) pc.getMethod("Goal").invoke(parser);
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            System.err.println(e.getCause());
+        } catch (Exception e) {
+            System.err.println("cannot run the parser: " + e);
+        }
+        System.exit(1);
+        return null;
     }
 
     private static final class AstReader {
@@ -145,8 +202,7 @@ public class Main {
 
             LinkedList<VarDecl> fields = new LinkedList<VarDecl>();
             for (Object o : listKids(n.kids.get(2))) {
-                Node v = node(o, "field");
-                fields.add(new VarDecl(type(v.kids.get(0)), atom(v, 1), null));
+                fields.add(varDecl(node(o, "field")));
             }
             LinkedList<MethodDecl> methods = new LinkedList<MethodDecl>();
             for (Object o : listKids(n.kids.get(3))) methods.add(methodDecl(node(o, "method")));
@@ -157,8 +213,7 @@ public class Main {
 
         private static MethodDecl methodDecl(Node n) {
             if (n.name.equals("VoidDecl")) {
-                
-                return new VoidDecl(atom(n, 0), formals(n.kids.get(1)), new LinkedList<Stmt>());
+                return new VoidDecl(atom(n, 0), formals(n.kids.get(1)), stmts(n.kids.get(2)));
             }
             int i = 0;
             Absyn.Type ret = null;
@@ -167,9 +222,12 @@ public class Main {
             boolean synced = false;
             if ("synchronized".equals(n.kids.get(i))) { synced = true; i++; }
             String name = atom(n, i++);
-            LinkedList<Formal> params = formals(n.kids.get(i));
-            return new MethodDecl(ret, synced, name, params,
-                    new LinkedList<VarDecl>(), new LinkedList<Stmt>(), null);
+            LinkedList<Formal> params = formals(n.kids.get(i++));
+            LinkedList<VarDecl> locals = new LinkedList<VarDecl>();
+            for (Object o : listKids(n.kids.get(i++))) locals.add(varDecl(node(o, "local")));
+            LinkedList<Stmt> body = stmts(n.kids.get(i++));
+            Expr rv = (i < n.kids.size()) ? optExpr(n.kids.get(i)) : null;
+            return new MethodDecl(ret, synced, name, params, locals, body, rv);
         }
 
         private static LinkedList<Formal> formals(Object list) {
@@ -180,6 +238,94 @@ public class Main {
             }
             return out;
         }
+        private static VarDecl varDecl(Node v) {
+            Expr init = (v.kids.size() > 2) ? optExpr(v.kids.get(2)) : null;
+            return new VarDecl(type(v.kids.get(0)), atom(v, 1), init);
+        }
+
+        private static Expr optExpr(Object o) {
+            if ("null".equals(o)) return null;
+            return expr(o);
+        }
+        private static LinkedList<Stmt> stmts(Object list) {
+            LinkedList<Stmt> out = new LinkedList<Stmt>();
+            for (Object o : listKids(list)) out.add(stmt(o));
+            return out;
+        }
+
+        private static LinkedList<Expr> exprs(Object list) {
+            LinkedList<Expr> out = new LinkedList<Expr>();
+            for (Object o : listKids(list)) out.add("null".equals(o) ? null : expr(o));
+            return out;
+        }
+        private static Stmt stmt(Object o) {
+            Node n = node(o, "statement");
+            if (n.name.equals("BlockStmt")) return new BlockStmt(stmts(n.kids.get(0)));
+            if (n.name.equals("AssignStmt"))
+                return new AssignStmt(expr(n.kids.get(0)), expr(n.kids.get(1)));
+            if (n.name.equals("IfStmt")) {
+                Object e = n.kids.get(2);
+                return new IfStmt(expr(n.kids.get(0)), stmt(n.kids.get(1)),
+                        "null".equals(e) ? null : stmt(e));
+            }
+            if (n.name.equals("WhileStmt"))
+                return new WhileStmt(expr(n.kids.get(0)), stmt(n.kids.get(1)));
+            if (n.name.equals("XinuCallStmt"))
+                return new XinuCallStmt(atom(n, 0), exprs(n.kids.get(1)));
+            throw new FormatError("unknown statement in AST: " + n.name);
+        }
+        private static Expr expr(Object o) {
+        if (o instanceof String) {
+            String s = (String) o;
+            if (s.equals("TrueExpr")) return new TrueExpr();
+            if (s.equals("FalseExpr")) return new FalseExpr();
+            if (s.equals("ThisExpr")) return new ThisExpr();
+            if (s.equals("NullExpr")) return new NullExpr();
+            throw new FormatError("unknown expression in AST: " + s);
+        }
+        Node n = (Node) o;
+        String k = n.name;
+        if (k.equals("IdentifierExpr")) return new IdentifierExpr(atom(n, 0));
+        if (k.equals("IntegerLiteral")) return new IntegerLiteral(Integer.parseInt(atom(n, 0)));
+        if (k.equals("StringLiteral")) {
+            StringBuilder sb = new StringBuilder();
+            for (Object x : n.kids) {
+                if (sb.length() > 0) sb.append(' ');
+                sb.append(x instanceof String ? (String) x : "");
+            }
+            return new StringLiteral(sb.toString());
+        }
+        if (k.equals("NotExpr")) return new NotExpr(expr(n.kids.get(0)));
+        if (k.equals("NegExpr")) return new NegExpr(expr(n.kids.get(0)));
+        if (k.equals("ArrayLength")) return new ArrayLength(expr(n.kids.get(0)));
+        if (k.equals("ArrayExpr")) return new ArrayExpr(expr(n.kids.get(0)), expr(n.kids.get(1)));
+        if (k.equals("FieldExpr")) return new FieldExpr(expr(n.kids.get(0)), atom(n, 1));
+        if (k.equals("CallExpr"))
+            return new CallExpr(expr(n.kids.get(0)), atom(n, 1), exprs(n.kids.get(2)));
+        if (k.equals("XinuCallExpr")) return new XinuCallExpr(atom(n, 0), exprs(n.kids.get(1)));
+        if (k.equals("NewObjectExpr"))
+                return new NewObjectExpr(type(n.kids.get(0)));
+        if (k.equals("NewArrayExpr"))
+            return new NewArrayExpr(type(n.kids.get(0)), exprs(n.kids.get(1)));
+        Expr a = null, b = null;
+        if (k.endsWith("Expr") && n.kids.size() == 2) {
+            a = expr(n.kids.get(0));
+            b = expr(n.kids.get(1));
+        }
+        if (k.equals("AddExpr")) return new AddExpr(a, b);
+        if (k.equals("SubExpr")) return new SubExpr(a, b);
+        if (k.equals("MulExpr")) return new MulExpr(a, b);
+        if (k.equals("DivExpr")) return new DivExpr(a, b);
+        if (k.equals("LesserExpr")) return new LesserExpr(a, b);
+        if (k.equals("GreaterExpr")) return new GreaterExpr(a, b);
+        if (k.equals("AndExpr")) return new AndExpr(a, b);
+        if (k.equals("EqualExpr")) return new EqualExpr(a, b);
+        if (k.equals("NotEqExpr")) return new NotEqExpr(a, b);
+        throw new FormatError("unknown expression in AST: " + k);
+    }
+
+        
+
 
         private static Absyn.Type type(Object o) {
             if (o instanceof String) {

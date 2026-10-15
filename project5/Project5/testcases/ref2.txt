@@ -1,0 +1,37 @@
+ERROR mismatch in number of arguments: 
+          CallExpr(
+           NewObjectExpr(IdentifierType(Foo))
+           Bar
+           AbstractList(
+            IntegerLiteral(1)))
+ERROR cannot resolve symbol undefinedVar: 
+          IdentifierExpr(undefinedVar)
+ERROR incompatible types: int required, but void found: 
+          AssignStmt(
+           IdentifierExpr(x)
+           IdentifierExpr(undefinedVar))
+ERROR incompatible types: boolean required, but int found: 
+          AssignStmt(
+           IdentifierExpr(b)
+           IntegerLiteral(5))
+ERROR cannot resolve class Missing: IdentifierType(Missing)
+ERROR incompatible types: int required, but void found: 
+          AssignStmt(
+           IdentifierExpr(f)
+           NewObjectExpr(IdentifierType(Missing)))
+ERROR incompatible types: int required, but boolean found: 
+          IdentifierExpr(b)
+ERROR cannot resolve method Nope: 
+          CallExpr(
+           ThisExpr
+           Nope
+           AbstractList(
+            IdentifierExpr(p)
+            IdentifierExpr(p)))
+ERROR incompatible types: int required, but void found: 
+          CallExpr(
+           ThisExpr
+           Nope
+           AbstractList(
+            IdentifierExpr(p)
+            IdentifierExpr(p)))
