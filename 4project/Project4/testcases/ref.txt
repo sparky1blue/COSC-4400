@@ -1,0 +1,416 @@
+
+CLASS(TreeVisitor
+ null
+ RECORD(
+  FIELD(0 main
+   FUNCTION(main
+    OBJECT(TreeVisitor)
+    RECORD(
+     FIELD(0 a
+      ARRAY(
+       OBJECT(String))))
+    VOID)))
+ RECORD()
+ OBJECT(TreeVisitor
+  RECORD(
+   FIELD(0 main
+    FUNCTION(main
+     OBJECT(TreeVisitor)
+     RECORD(
+      FIELD(0 a
+       ARRAY(
+        OBJECT(String))))
+     VOID)))
+  RECORD()))
+
+CLASS(TV
+ null
+ RECORD(
+  FIELD(0 Start
+   FUNCTION(Start
+    OBJECT(TV)
+    RECORD()
+    INT)))
+ RECORD()
+ OBJECT(TV
+  RECORD(
+   FIELD(0 Start
+    FUNCTION(Start
+     OBJECT(TV)
+     RECORD()
+     INT)))
+  RECORD()))
+
+CLASS(Tree
+ null
+ RECORD(
+  FIELD(0 Init
+   FUNCTION(Init
+    OBJECT(Tree)
+    RECORD(
+     FIELD(0 v_key
+      INT))
+    BOOLEAN))
+  FIELD(1 SetRight
+   FUNCTION(SetRight
+    OBJECT(Tree)
+    RECORD(
+     FIELD(0 rn
+      OBJECT(Tree)))
+    BOOLEAN))
+  FIELD(2 SetLeft
+   FUNCTION(SetLeft
+    OBJECT(Tree)
+    RECORD(
+     FIELD(0 ln
+      OBJECT(Tree)))
+    BOOLEAN))
+  FIELD(3 GetRight
+   FUNCTION(GetRight
+    OBJECT(Tree)
+    RECORD()
+    OBJECT(Tree)))
+  FIELD(4 GetLeft
+   FUNCTION(GetLeft
+    OBJECT(Tree)
+    RECORD()
+    OBJECT(Tree)))
+  FIELD(5 GetKey
+   FUNCTION(GetKey
+    OBJECT(Tree)
+    RECORD()
+    INT))
+  FIELD(6 SetKey
+   FUNCTION(SetKey
+    OBJECT(Tree)
+    RECORD(
+     FIELD(0 v_key
+      INT))
+    BOOLEAN))
+  FIELD(7 GetHas_Right
+   FUNCTION(GetHas_Right
+    OBJECT(Tree)
+    RECORD()
+    BOOLEAN))
+  FIELD(8 GetHas_Left
+   FUNCTION(GetHas_Left
+    OBJECT(Tree)
+    RECORD()
+    BOOLEAN))
+  FIELD(9 SetHas_Left
+   FUNCTION(SetHas_Left
+    OBJECT(Tree)
+    RECORD(
+     FIELD(0 val
+      BOOLEAN))
+    BOOLEAN))
+  FIELD(10 SetHas_Right
+   FUNCTION(SetHas_Right
+    OBJECT(Tree)
+    RECORD(
+     FIELD(0 val
+      BOOLEAN))
+    BOOLEAN))
+  FIELD(11 Compare
+   FUNCTION(Compare
+    OBJECT(Tree)
+    RECORD(
+     FIELD(0 num1
+      INT)
+     FIELD(1 num2
+      INT))
+    BOOLEAN))
+  FIELD(12 Insert
+   FUNCTION(Insert
+    OBJECT(Tree)
+    RECORD(
+     FIELD(0 v_key
+      INT))
+    BOOLEAN))
+  FIELD(13 Delete
+   FUNCTION(Delete
+    OBJECT(Tree)
+    RECORD(
+     FIELD(0 v_key
+      INT))
+    BOOLEAN))
+  FIELD(14 Remove
+   FUNCTION(Remove
+    OBJECT(Tree)
+    RECORD(
+     FIELD(0 p_node
+      OBJECT(Tree))
+     FIELD(1 c_node
+      OBJECT(Tree)))
+    BOOLEAN))
+  FIELD(15 RemoveRight
+   FUNCTION(RemoveRight
+    OBJECT(Tree)
+    RECORD(
+     FIELD(0 p_node
+      OBJECT(Tree))
+     FIELD(1 c_node
+      OBJECT(Tree)))
+    BOOLEAN))
+  FIELD(16 RemoveLeft
+   FUNCTION(RemoveLeft
+    OBJECT(Tree)
+    RECORD(
+     FIELD(0 p_node
+      OBJECT(Tree))
+     FIELD(1 c_node
+      OBJECT(Tree)))
+    BOOLEAN))
+  FIELD(17 Search
+   FUNCTION(Search
+    OBJECT(Tree)
+    RECORD(
+     FIELD(0 v_key
+      INT))
+    INT))
+  FIELD(18 Print
+   FUNCTION(Print
+    OBJECT(Tree)
+    RECORD()
+    BOOLEAN))
+  FIELD(19 RecPrint
+   FUNCTION(RecPrint
+    OBJECT(Tree)
+    RECORD(
+     FIELD(0 node
+      OBJECT(Tree)))
+    BOOLEAN))
+  FIELD(20 accept
+   FUNCTION(accept
+    OBJECT(Tree)
+    RECORD(
+     FIELD(0 v
+      OBJECT(Visitor)))
+    INT)))
+ RECORD(
+  FIELD(0 left
+   OBJECT(Tree))
+  FIELD(1 right
+   OBJECT(Tree))
+  FIELD(2 key
+   INT)
+  FIELD(3 has_left
+   BOOLEAN)
+  FIELD(4 has_right
+   BOOLEAN)
+  FIELD(5 my_null
+   OBJECT(Tree)))
+ OBJECT(Tree
+  RECORD(
+   FIELD(0 Init
+    FUNCTION(Init
+     OBJECT(Tree)
+     RECORD(
+      FIELD(0 v_key
+       INT))
+     BOOLEAN))
+   FIELD(1 SetRight
+    FUNCTION(SetRight
+     OBJECT(Tree)
+     RECORD(
+      FIELD(0 rn
+       OBJECT(Tree)))
+     BOOLEAN))
+   FIELD(2 SetLeft
+    FUNCTION(SetLeft
+     OBJECT(Tree)
+     RECORD(
+      FIELD(0 ln
+       OBJECT(Tree)))
+     BOOLEAN))
+   FIELD(3 GetRight
+    FUNCTION(GetRight
+     OBJECT(Tree)
+     RECORD()
+     OBJECT(Tree)))
+   FIELD(4 GetLeft
+    FUNCTION(GetLeft
+     OBJECT(Tree)
+     RECORD()
+     OBJECT(Tree)))
+   FIELD(5 GetKey
+    FUNCTION(GetKey
+     OBJECT(Tree)
+     RECORD()
+     INT))
+   FIELD(6 SetKey
+    FUNCTION(SetKey
+     OBJECT(Tree)
+     RECORD(
+      FIELD(0 v_key
+       INT))
+     BOOLEAN))
+   FIELD(7 GetHas_Right
+    FUNCTION(GetHas_Right
+     OBJECT(Tree)
+     RECORD()
+     BOOLEAN))
+   FIELD(8 GetHas_Left
+    FUNCTION(GetHas_Left
+     OBJECT(Tree)
+     RECORD()
+     BOOLEAN))
+   FIELD(9 SetHas_Left
+    FUNCTION(SetHas_Left
+     OBJECT(Tree)
+     RECORD(
+      FIELD(0 val
+       BOOLEAN))
+     BOOLEAN))
+   FIELD(10 SetHas_Right
+    FUNCTION(SetHas_Right
+     OBJECT(Tree)
+     RECORD(
+      FIELD(0 val
+       BOOLEAN))
+     BOOLEAN))
+   FIELD(11 Compare
+    FUNCTION(Compare
+     OBJECT(Tree)
+     RECORD(
+      FIELD(0 num1
+       INT)
+      FIELD(1 num2
+       INT))
+     BOOLEAN))
+   FIELD(12 Insert
+    FUNCTION(Insert
+     OBJECT(Tree)
+     RECORD(
+      FIELD(0 v_key
+       INT))
+     BOOLEAN))
+   FIELD(13 Delete
+    FUNCTION(Delete
+     OBJECT(Tree)
+     RECORD(
+      FIELD(0 v_key
+       INT))
+     BOOLEAN))
+   FIELD(14 Remove
+    FUNCTION(Remove
+     OBJECT(Tree)
+     RECORD(
+      FIELD(0 p_node
+       OBJECT(Tree))
+      FIELD(1 c_node
+       OBJECT(Tree)))
+     BOOLEAN))
+   FIELD(15 RemoveRight
+    FUNCTION(RemoveRight
+     OBJECT(Tree)
+     RECORD(
+      FIELD(0 p_node
+       OBJECT(Tree))
+      FIELD(1 c_node
+       OBJECT(Tree)))
+     BOOLEAN))
+   FIELD(16 RemoveLeft
+    FUNCTION(RemoveLeft
+     OBJECT(Tree)
+     RECORD(
+      FIELD(0 p_node
+       OBJECT(Tree))
+      FIELD(1 c_node
+       OBJECT(Tree)))
+     BOOLEAN))
+   FIELD(17 Search
+    FUNCTION(Search
+     OBJECT(Tree)
+     RECORD(
+      FIELD(0 v_key
+       INT))
+     INT))
+   FIELD(18 Print
+    FUNCTION(Print
+     OBJECT(Tree)
+     RECORD()
+     BOOLEAN))
+   FIELD(19 RecPrint
+    FUNCTION(RecPrint
+     OBJECT(Tree)
+     RECORD(
+      FIELD(0 node
+       OBJECT(Tree)))
+     BOOLEAN))
+   FIELD(20 accept
+    FUNCTION(accept
+     OBJECT(Tree)
+     RECORD(
+      FIELD(0 v
+       OBJECT(Visitor)))
+     INT)))
+  RECORD(
+   FIELD(0 left
+    OBJECT(Tree))
+   FIELD(1 right
+    OBJECT(Tree))
+   FIELD(2 key
+    INT)
+   FIELD(3 has_left
+    BOOLEAN)
+   FIELD(4 has_right
+    BOOLEAN)
+   FIELD(5 my_null
+    OBJECT(Tree)))))
+
+CLASS(Visitor
+ null
+ RECORD(
+  FIELD(0 visit
+   FUNCTION(visit
+    OBJECT(Visitor)
+    RECORD(
+     FIELD(0 n
+      OBJECT(Tree)))
+    INT)))
+ RECORD(
+  FIELD(0 l
+   OBJECT(Tree))
+  FIELD(1 r
+   OBJECT(Tree)))
+ OBJECT(Visitor
+  RECORD(
+   FIELD(0 visit
+    FUNCTION(visit
+     OBJECT(Visitor)
+     RECORD(
+      FIELD(0 n
+       OBJECT(Tree)))
+     INT)))
+  RECORD(
+   FIELD(0 l
+    OBJECT(Tree))
+   FIELD(1 r
+    OBJECT(Tree)))))
+
+CLASS(MyVisitor
+ Visitor
+ RECORD(
+  FIELD(0 visit
+   FUNCTION(visit
+    OBJECT(MyVisitor)
+    RECORD(
+     FIELD(0 n
+      OBJECT(Tree)))
+    INT)))
+ RECORD()
+ OBJECT(MyVisitor
+  RECORD(
+   FIELD(0 visit
+    FUNCTION(visit
+     OBJECT(MyVisitor)
+     RECORD(
+      FIELD(0 n
+       OBJECT(Tree)))
+     INT)))
+  RECORD(
+   FIELD(0 l
+    OBJECT(Tree))
+   FIELD(1 r
+    OBJECT(Tree)))))

@@ -1,0 +1,46 @@
+Program(
+ AbstractList(
+  ClassDecl(Factorial null
+   AbstractList()
+   AbstractList(
+    MethodDecl(public_static_void main
+     AbstractList(
+      Formal(ArrayType(IdentifierType(String)) a))
+     AbstractList()
+     AbstractList(
+      XinuCallStmt(printint
+       AbstractList(
+        CallExpr(
+         NewObjectExpr(IdentifierType(Fac))
+         ComputeFac
+         AbstractList(
+          IntegerLiteral(10))))))
+     IntegerLiteral(0))))
+  ClassDecl(Fac null
+   AbstractList()
+   AbstractList(
+    MethodDecl(IntegerType ComputeFac
+     AbstractList(
+      Formal(IntegerType num))
+     AbstractList(
+      VarDecl(IntegerType num_aux null))
+     AbstractList(
+      IfStmt(
+       LesserExpr(
+        IdentifierExpr(num)
+        IntegerLiteral(1))
+       AssignStmt(
+        IdentifierExpr(num_aux)
+        IntegerLiteral(1))
+       AssignStmt(
+        IdentifierExpr(num_aux)
+        MulExpr(
+         IdentifierExpr(num)
+         CallExpr(
+          ThisExpr
+          ComputeFac
+          AbstractList(
+           SubExpr(
+            IdentifierExpr(num)
+            IntegerLiteral(1))))))))
+     IdentifierExpr(num_aux))))))
