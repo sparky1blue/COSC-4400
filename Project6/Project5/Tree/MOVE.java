@@ -1,14 +1,17 @@
+/* Copyright (C) 1997-2003, Purdue Research Foundation of Purdue University.
+ * All rights reserved.  */
 package Tree;
+import Temp.Temp;
+import Temp.Label;
+import java.util.LinkedList;
 
-public class MOVE extends Stm{
-    public Exp dest, sorc;
-    
-    public MOVE(Exp d, Exp s){
-        dest = d;
-        sorc = s;
-    }
+/**
+ * Implements a move instruction.
+ */
 
-    public void accept(IntVisitor v, int d){
-        v.visit(this, d);
-    }
+public class MOVE extends Stm 
+{
+    public Exp dst, src;
+    public MOVE(Exp d, Exp s) { dst=d; src=s; }
+    public void accept(IntVisitor v, int d) { v.visit(this, d); }
 }
