@@ -8,26 +8,26 @@ import java.util.List;
 import java.util.Map;
 
 
-public class Table {
-    private final Map<Symbol, Deque<Object>> bindings = new HashMap<Symbol, Deque<Object>>();
+public class Table<T>{
+    private final Map<Symbol, Deque<T>> bindings = new HashMap<Symbol, Deque<T>>();
     private final Deque<List<Symbol>> scopes = new ArrayDeque<List<Symbol>>();
 
 
     public Table() {
         scopes.push(new ArrayList<Symbol>()); 
     }
-    public Table put(Symbol key, Object value){
-        Deque<Object> stack = bindings.get(key);
+    public Table<T> put(Symbol key, T value){
+        Deque<T> stack = bindings.get(key);
         if(stack == null){
-            stack = new ArrayDeque<Object>();
+            stack = new ArrayDeque<T>();
             bindings.put(key, stack);
         }
         stack.push(value);
         scopes.peek().add(key);
         return this;
     }
-    public Object get(Symbol key){
-        Deque<Object> stack = bindings.get(key);
+    public T get(Symbol key){
+        Deque<T> stack = bindings.get(key);
         if (stack == null || stack.isEmpty()) {
             return null;
         } else {
@@ -45,7 +45,7 @@ public class Table {
             //TODO error throw
         }
         for(Symbol key : scopes.pop()){
-            Deque<Object> stack = bindings.get(key);
+            Deque<T> stack = bindings.get(key);
             stack.pop();
             if(stack.isEmpty()){
                 bindings.remove(key);

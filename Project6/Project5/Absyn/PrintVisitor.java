@@ -199,6 +199,15 @@ public class PrintVisitor implements Visitor
 		indentCount--;
 		out.print(")");
 	}
+	public void visit(OrExpr ast){
+		indent();
+		out.print("OrExpr(");
+		indentCount++;
+		ast.first.accept(this);
+		ast.second.accept(this);
+		indentCount--;
+		out.print(")");
+	}
 	public void visit(SubExpr ast){
 		indent();
 		out.print("SubExpr(");

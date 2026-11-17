@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
+import Absyn.OrExpr;
 import Absyn.AddExpr;
 import Absyn.AndExpr;
 import Absyn.ArrayExpr;
@@ -319,6 +319,7 @@ public class TypeChecker implements TypeVisitor {
 
     public Types.Type visit(AddExpr ast) { return binary("+", ast.first, ast.second, INT, INT, ast); }
     public Types.Type visit(AndExpr ast) { return binary("&&", ast.first, ast.second, BOOLEAN, BOOLEAN, ast); }
+    public Types.Type visit(OrExpr ast) { return binary("||", ast.first, ast.second, BOOLEAN, BOOLEAN, ast); }
     public Types.Type visit(ArrayExpr ast) {
         Types.Type a = exprType(ast.array);
         Types.Type i = exprType(ast.index);

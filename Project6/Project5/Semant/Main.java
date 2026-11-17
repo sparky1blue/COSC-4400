@@ -16,7 +16,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
+import Absyn.OrExpr;
 import Absyn.ArrayType;
 import Absyn.BooleanType;
 import Absyn.ClassDecl;
@@ -319,6 +319,7 @@ public class Main {
         if (k.equals("LesserExpr")) return new LesserExpr(a, b);
         if (k.equals("GreaterExpr")) return new GreaterExpr(a, b);
         if (k.equals("AndExpr")) return new AndExpr(a, b);
+        if (k.equals("OrExpr")) return new OrExpr(a, b);
         if (k.equals("EqualExpr")) return new EqualExpr(a, b);
         if (k.equals("NotEqExpr")) return new NotEqExpr(a, b);
         throw new FormatError("unknown expression in AST: " + k);

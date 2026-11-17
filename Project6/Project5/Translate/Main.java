@@ -12,6 +12,8 @@ import Parse.*;
 import java.util.HashMap; 
 import java.util.List;
 import java.util.LinkedList;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 //import Translate.Translate;
 
@@ -32,13 +34,19 @@ public class Main
 	    // If you are building on your prior projects, comment this
 	    // out, and replace it with code the invokes your parser
 	    // and typechecker (See Parse.Main and Semant.Main).
-	    parse = new Parse.ReadTypes(reader).Program();
+	    //parse = new Parse.ReadTypes(reader).Program();
+		parse = new Parse.MiniJavaParser(reader).Goal();
 	}
 	catch (ParseException p)
 	{
 	    System.err.println(p.toString());
 	    System.exit(-1);
 	}
+	Semant.TypeChecker checker = new Semant.TypeChecker();
+	checker.checkBodies = true;
+	checker.visit(parse);
+	if (checker.errors > 0) System.exit(1);
+
 		
 	Translate translate = new Translate(new Riscv.RiscvFrame());
 	parse.accept(translate);

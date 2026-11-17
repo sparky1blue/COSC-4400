@@ -15,6 +15,7 @@ public abstract class Frame
   public Temp.Label name;
   /* Formals - This will contain a list of Access*/	
   public List<Access> formals;	
+  public List<Access> actuals;
 
   public abstract Frame newFrame(Symbol.Symbol name);
   public abstract Access allocFormal();

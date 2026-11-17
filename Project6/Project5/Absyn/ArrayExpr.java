@@ -10,4 +10,5 @@ public class ArrayExpr extends Expr{
     }
 
     public void accept(Visitor v) {v.visit(this);}
+    public Translate.Exp accept(TreeVisitor v) { return v.visit(this); }
 }

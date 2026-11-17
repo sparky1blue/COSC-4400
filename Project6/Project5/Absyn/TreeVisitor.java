@@ -39,6 +39,7 @@ public interface TreeVisitor
     public Translate.Exp visit(NullExpr ast);
     public Translate.Exp visit(OrExpr ast);
     public Translate.Exp visit(Program ast);
+    public Translate.Exp visit(ArrayLength ast);
     public Translate.Exp visit(SubExpr ast);
     public Translate.Exp visit(StringLiteral ast);
     public Translate.Exp visit(ThisExpr ast);

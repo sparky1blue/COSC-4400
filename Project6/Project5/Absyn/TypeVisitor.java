@@ -36,7 +36,7 @@ public interface TypeVisitor
     public Types.Type visit(NotEqExpr ast);
     public Types.Type visit(NotExpr ast);
     public Types.Type visit(NullExpr ast);
-    //public Types.Type visit(OrExpr ast);
+    public Types.Type visit(OrExpr ast);
     public Types.Type visit(Program ast);
     public Types.Type visit(StringLiteral ast);
     public Types.Type visit(SubExpr ast);

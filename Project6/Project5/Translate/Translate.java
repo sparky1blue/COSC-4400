@@ -6,6 +6,14 @@ package Translate;
  * Implements translation of abstract syntax expressions
  * into intermediate trees.
  */
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import Temp.Temp;
+import Temp.Label;
+import Symbol.Symbol;
+import Symbol.Table;
+import Types.CLASS;
 
 public class Translate implements Absyn.TreeVisitor 
 {
@@ -131,30 +139,30 @@ public class Translate implements Absyn.TreeVisitor
 	return null;
     }
 
-    private Exp Ex(int op, Absyn.BinOpExpr e) 
+    private Exp Ex(int op, Absyn.Expr left, Absyn.Expr right)
     {
-        Exp e1 = e.e1.accept(this);
-		Exp e2 = e.e2.accept(this);
-		return new Ex(BINOP(op, e1.unEx(), e2.unEx()));
+        Exp e1 = left.accept(this);
+        Exp e2 = right.accept(this);
+        return new Ex(BINOP(op, e1.unEx(), e2.unEx()));
     }
 
-    public Exp visit(Absyn.AddExpr e) { return Ex(Tree.BINOP.PLUS, e); }
-    public Exp visit(Absyn.DivExpr e) { return Ex(Tree.BINOP.DIV, e); }
-    public Exp visit(Absyn.MulExpr e) { return Ex(Tree.BINOP.MUL, e); }
-    public Exp visit(Absyn.SubExpr e) { return Ex(Tree.BINOP.MINUS, e); }
+    public Exp visit(Absyn.AddExpr e) { return Ex(Tree.BINOP.PLUS, e.first, e.second); }
+    public Exp visit(Absyn.DivExpr e) { return Ex(Tree.BINOP.DIV, e.left, e.right); }
+    public Exp visit(Absyn.MulExpr e) { return Ex(Tree.BINOP.MUL, e.first, e.second); }
+    public Exp visit(Absyn.SubExpr e) { return Ex(Tree.BINOP.MINUS, e.first, e.second); }
 
     public Exp visit(Absyn.NegExpr e)
     {
-	return new Ex(BINOP(Tree.BINOP.MINUS, 
-			    CONST(0), e.e1.accept(this).unEx()));
+        return new Ex(BINOP(Tree.BINOP.MINUS, 
+                            CONST(0), e.expr.accept(this).unEx()));
     }
 
     public Exp visit(Absyn.AndExpr e) 
     {
-        Exp e1 = e.e1.accept(this);
-	Exp e2 = e.e2.accept(this);
-	// Short-circuit Boolean AND, with false == 0.
-	return new IfThenElseExp(e1, e2, new Ex(CONST(0)));
+        Exp e1 = e.first.accept(this);
+        Exp e2 = e.second.accept(this);
+        // Short-circuit Boolean AND, with false == 0.
+        return new IfThenElseExp(e1, e2, new Ex(CONST(0)));
     }
 
     public Exp visit(Absyn.OrExpr e)
@@ -163,21 +171,21 @@ public class Translate implements Absyn.TreeVisitor
 	return null;
     }
 
-    private Exp RelCx(int op, Absyn.BinOpExpr e)
+    private Exp RelCx(int op, Absyn.Expr left, Absyn.Expr right)
     {
-        Exp e1 = e.e1.accept(this);
-	Exp e2 = e.e2.accept(this);
-	return new RelCx(op, e1.unEx(), e2.unEx());
+        Exp e1 = left.accept(this);
+        Exp e2 = right.accept(this);
+        return new RelCx(op, e1.unEx(), e2.unEx());
     }
 
-    public Exp visit(Absyn.GreaterExpr e)  { return RelCx(Tree.CJUMP.GT, e); }
-    public Exp visit(Absyn.LesserExpr e)   { return RelCx(Tree.CJUMP.LT, e); }
-    public Exp visit(Absyn.EqualExpr e)    { return RelCx(Tree.CJUMP.EQ, e); }
-    public Exp visit(Absyn.NotEqExpr e)    { return RelCx(Tree.CJUMP.NE, e); }
+    public Exp visit(Absyn.GreaterExpr e)  { return RelCx(Tree.CJUMP.GT, e.left, e.right); }
+    public Exp visit(Absyn.LesserExpr e)   { return RelCx(Tree.CJUMP.LT, e.first, e.second); }
+    public Exp visit(Absyn.EqualExpr e)    { return RelCx(Tree.CJUMP.EQ, e.left, e.right); }
+    public Exp visit(Absyn.NotEqExpr e)    { return RelCx(Tree.CJUMP.NE, e.left, e.right); }
 
     public Exp visit(Absyn.NotExpr e)
     {
-        Exp exp = e.e1.accept(this);
+        Exp exp = e.expr.accept(this);
         return new IfThenElseExp(exp, new Ex(CONST(0)), new Ex(CONST(1)));
     }
 
@@ -225,7 +233,7 @@ public class Translate implements Absyn.TreeVisitor
     public Exp visit(Absyn.StringLiteral e) 
     {
 	String result = e.value.intern();
-	Label lab = strings.get(u);
+	Label lab = strings.get(result);
 	if (lab != null) return new Ex(NAME(lab));
 	lab = new Label();
 	strings.put(result, lab);
@@ -260,5 +268,10 @@ public class Translate implements Absyn.TreeVisitor
     {
     	// TODO
 	return null;
+    }
+        public Exp visit(Absyn.ArrayLength e)
+    {
+        // TODO
+        return null;
     }
 }

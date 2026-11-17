@@ -2,6 +2,7 @@
 package Semant;
 
 import Absyn.AddExpr;
+import Absyn.OrExpr;
 import Absyn.AndExpr;
 import Absyn.ArrayExpr;
 import Absyn.ArrayLength;
@@ -296,6 +297,15 @@ public class PrintVisitor implements Absyn.Visitor, Types.Visitor
 	public void visit(AndExpr ast){
 		indent();
 		out.print("AndExpr(");
+		indentCount++;
+		ast.first.accept(this);
+		ast.second.accept(this);
+		indentCount--;
+		out.print(")");
+	}
+	public void visit(OrExpr ast){
+		indent();
+		out.print("OrExpr(");
 		indentCount++;
 		ast.first.accept(this);
 		ast.second.accept(this);

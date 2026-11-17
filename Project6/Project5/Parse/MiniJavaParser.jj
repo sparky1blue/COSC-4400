@@ -365,6 +365,16 @@ Absyn.XinuCallStmt XinuCallStatement() :
 }
 
 Absyn.Expr Expression():{
+        Absyn.Expr first, second;
+}
+{
+        first=AndExpression()
+        ("||" second = AndExpression() {first = new Absyn.OrExpr(first, second);}
+        )*
+        {return first;} 
+}
+
+Absyn.Expr AndExpression():{
 	Absyn.Expr first, second;
 }
 {

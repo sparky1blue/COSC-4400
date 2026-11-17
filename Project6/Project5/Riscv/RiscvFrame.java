@@ -345,4 +345,11 @@ public class RiscvFrame extends Frame.Frame
     public void procEntryExit1(List<Tree.Stm> body)
     {
     }
+    public void procEntryExit2(java.util.List<Assem.Instr> body)
+    {
+        // filled in by a later project
+    }
+    public void procEntryExit3(java.util.List<Assem.Instr> body)
+    {
+    }
 }

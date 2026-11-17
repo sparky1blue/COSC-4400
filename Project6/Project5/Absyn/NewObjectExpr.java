@@ -7,5 +7,6 @@ public class NewObjectExpr extends Expr{
         this.claName = claName;
     }
     public void accept(Visitor v){v.visit(this);}
+    public Translate.Exp accept(TreeVisitor v) { return v.visit(this); }
     
 }
