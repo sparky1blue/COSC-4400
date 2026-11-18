@@ -601,6 +601,7 @@ public class TypeChecker implements TypeVisitor {
     private Types.Type exprType(Object e) {
         if (e instanceof AddExpr) return visit((AddExpr) e);
         if (e instanceof AndExpr) return visit((AndExpr) e);
+        if (e instanceof OrExpr) return visit((OrExpr) e);
         if (e instanceof ArrayExpr) return visit((ArrayExpr) e);
         if (e instanceof ArrayLength) return arrayLength((ArrayLength) e);
         if (e instanceof CallExpr) return visit((CallExpr) e);
