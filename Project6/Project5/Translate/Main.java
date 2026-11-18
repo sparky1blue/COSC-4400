@@ -49,6 +49,7 @@ public class Main
 
 		
 	Translate translate = new Translate(new Riscv.RiscvFrame());
+	translate.notes = checker.notes;
 	parse.accept(translate);
 		
 	PrintWriter writer = new PrintWriter(System.out);

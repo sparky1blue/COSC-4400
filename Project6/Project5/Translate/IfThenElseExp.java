@@ -50,7 +50,12 @@ public class IfThenElseExp extends Exp {
     {
 	return new Tree.LABEL(label);
     }
-
+	private static Integer constValue(Exp e) {
+		if (e instanceof Ex && ((Ex) e).exp instanceof Tree.CONST) {
+			return ((Tree.CONST) ((Ex) e).exp).value;
+		}
+		return null;
+	}
 
     IfThenElseExp(Exp cExp, Exp tExp, Exp fExp) {
 	cond = cExp; 
@@ -59,16 +64,35 @@ public class IfThenElseExp extends Exp {
     }
 
     Tree.Stm unCx(Label tt, Label ff) {
-	// TODO: Check for optimizations
-        Tree.Stm tStm = trueExp.unNx();
-	Tree.Stm fStm = falseExp.unNx();
-	Label t = new Label();
-	Label f = new Label();
-        Tree.Stm condStm = cond.unCx(t, f);
-	return SEQ(condStm,
-		   SEQ(SEQ(LABEL(t), tStm),
-		       SEQ(LABEL(f), fStm)));
-    }
+		Integer tVal = constValue(trueExp);
+		Integer fVal = constValue(falseExp);
+
+		
+		if (tVal != null && fVal != null) {
+			if (tVal != 0 && fVal == 0) return cond.unCx(tt, ff);
+			if (tVal == 0 && fVal != 0) return cond.unCx(ff, tt);
+		}
+
+		
+		if (tVal == null && fVal != null && fVal == 0) {
+			Label z = new Label();
+			return SEQ(cond.unCx(z, ff),
+					SEQ(LABEL(z), trueExp.unCx(tt, ff)));
+		}
+
+		
+		if (fVal == null && tVal != null && tVal != 0) {
+			Label z = new Label();
+			return SEQ(cond.unCx(tt, z),
+					SEQ(LABEL(z), falseExp.unCx(tt, ff)));
+		}
+
+		Label t = new Label();
+		Label f = new Label();
+		return SEQ(cond.unCx(t, f),
+				SEQ(SEQ(LABEL(t), trueExp.unCx(tt, ff)),
+					SEQ(LABEL(f), falseExp.unCx(tt, ff))));
+	}
 
     Tree.Exp unEx() {
 	// TODO: Check for optimizations
