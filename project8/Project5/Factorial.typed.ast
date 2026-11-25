@@ -1,0 +1,106 @@
+Program(
+ AbstractList(
+  ClassDecl(Factorial null
+   AbstractList()
+   AbstractList(
+    MethodDecl(public_static_void main
+     AbstractList(
+      Formal(ArrayType(IdentifierType(String)) a))
+     AbstractList()
+     AbstractList(
+      XinuCallStmt(printint
+       AbstractList(
+        CallExpr(
+         NewObjectExpr(IdentifierType(Fac))
+         ComputeFac
+         AbstractList(
+          IntegerLiteral(10))
+         0))))
+     IntegerLiteral(0)
+     FUNCTION(main
+      OBJECT(Factorial)
+      RECORD(
+       FIELD(0 a
+        ARRAY(
+         OBJECT(String))))
+      VOID)))
+   CLASS(Factorial
+    null
+    RECORD(
+     FIELD(0 main
+      FUNCTION(main
+       OBJECT(Factorial)
+       RECORD(
+        FIELD(0 a
+         ARRAY(
+          OBJECT(String))))
+       VOID)))
+    RECORD()
+    OBJECT(Factorial
+     RECORD(
+      FIELD(0 main
+       FUNCTION(main
+        OBJECT(Factorial)
+        RECORD(
+         FIELD(0 a
+          ARRAY(
+           OBJECT(String))))
+        VOID)))
+     RECORD())))
+  ClassDecl(Fac null
+   AbstractList()
+   AbstractList(
+    MethodDecl(IntegerType ComputeFac
+     AbstractList(
+      Formal(IntegerType num))
+     AbstractList(
+      VarDecl(IntegerType num_aux null 
+       INT))
+     AbstractList(
+      IfStmt(
+       LesserExpr(
+        IdentifierExpr(num)
+        IntegerLiteral(1))
+       AssignStmt(
+        IdentifierExpr(num_aux)
+        IntegerLiteral(1))
+       AssignStmt(
+        IdentifierExpr(num_aux)
+        MulExpr(
+         IdentifierExpr(num)
+         CallExpr(
+          ThisExpr
+          ComputeFac
+          AbstractList(
+           SubExpr(
+            IdentifierExpr(num)
+            IntegerLiteral(1)))
+          0)))))
+     IdentifierExpr(num_aux)
+     FUNCTION(ComputeFac
+      OBJECT(Fac)
+      RECORD(
+       FIELD(0 num
+        INT))
+      INT)))
+   CLASS(Fac
+    null
+    RECORD(
+     FIELD(0 ComputeFac
+      FUNCTION(ComputeFac
+       OBJECT(Fac)
+       RECORD(
+        FIELD(0 num
+         INT))
+       INT)))
+    RECORD()
+    OBJECT(Fac
+     RECORD(
+      FIELD(0 ComputeFac
+       FUNCTION(ComputeFac
+        OBJECT(Fac)
+        RECORD(
+         FIELD(0 num
+          INT))
+        INT)))
+     RECORD())))))
